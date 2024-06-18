@@ -10,7 +10,7 @@
   "contact": {
     "homepage": "modrinth.com/mod/clientgive",
     "sources": "https://github.com/thevoidblock/clientgive",
-    "issues": "https://github.com/thevoidblock/clientgive"
+    "issues": "https://github.com/thevoidblock/clientgive/issues"
   },
   "license": "GPL-3.0",
   "icon": "assets/clientgive/icon.png",
