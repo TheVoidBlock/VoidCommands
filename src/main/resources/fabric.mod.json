@@ -20,6 +20,9 @@
       "com.thevoidblock.clientgive.ClientGive"
     ]
   },
+  "mixins": [
+    "clientgive.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
