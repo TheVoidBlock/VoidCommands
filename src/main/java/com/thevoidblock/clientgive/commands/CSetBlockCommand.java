@@ -1,8 +1,6 @@
 package com.thevoidblock.clientgive.commands;
 
-import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import dev.xpple.clientarguments.arguments.CItemArgument;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.block.BlockState;
