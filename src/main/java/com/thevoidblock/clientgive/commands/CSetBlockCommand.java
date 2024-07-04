@@ -1,14 +1,11 @@
 package com.thevoidblock.clientgive.commands;
 
 import com.mojang.brigadier.context.CommandContext;
+import dev.xpple.clientarguments.arguments.CBlockPosArgument;
+import dev.xpple.clientarguments.arguments.CBlockStateArgument;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.block.BlockState;
-import net.minecraft.command.argument.BlockPosArgumentType;
-import net.minecraft.command.argument.BlockStateArgument;
-import net.minecraft.command.argument.BlockStateArgumentType;
-import net.minecraft.command.argument.PosArgument;
-import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.math.BlockPos;
 
 import static com.thevoidblock.clientgive.ClientGive.CLIENT;
@@ -21,16 +18,16 @@ public class CSetBlockCommand {
                 (dispatcher, registryAccess) -> dispatcher.register(
                         literal("csetblock")
                                 .then(
-                                        argument("pos", BlockPosArgumentType.blockPos())
+                                        argument("pos", CBlockPosArgument.blockPos())
                                                 .then(
-                                                        argument("block", BlockStateArgumentType.blockState(registryAccess))
-                                                                .executes(CSetBlockCommand::setblock)
-                                ))));
+                                                        argument("block", CBlockStateArgument.blockState(registryAccess))
+                                                                .executes(CSetBlockCommand::setBlock)
+        ))));
     }
 
-    private static int setblock(CommandContext<FabricClientCommandSource> context) {
-        BlockPos blockPos = context.getArgument("pos", PosArgument.class).toAbsoluteBlockPos((ServerCommandSource) context.getSource());
-        BlockState blockState = context.getArgument("block", BlockStateArgument.class).getBlockState();
+    private static int setBlock(CommandContext<FabricClientCommandSource> context) {
+        BlockPos blockPos = CBlockPosArgument.getBlockPos(context, "pos");
+        BlockState blockState = CBlockStateArgument.getBlockState(context, "block").getState();
 
         CLIENT.world.setBlockState(blockPos, blockState);
         return 1;
