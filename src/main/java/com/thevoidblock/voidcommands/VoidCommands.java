@@ -1,7 +1,5 @@
 package com.thevoidblock.voidcommands;
 
-import com.thevoidblock.voidcommands.commands.VGetCommand;
-import com.thevoidblock.voidcommands.commands.VSetBlockCommand;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
 import org.slf4j.Logger;
