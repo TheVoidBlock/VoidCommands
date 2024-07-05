@@ -1,10 +1,16 @@
+
 # Ghost Item Giver
 
-All commands are prefixed with 'v'
+All commands are prefixed with ```v```
 
-Adds a command ```/vget <item> <count>``` to get a ghost item.
-In creative mode the items will be ghost, until you use them.
+<details>
+<summary>Commands</summary>
 
-Adds a command ```/vsetblock <blockPos> <blockState>``` to set a block client side
+| Command                                 | Description                                                                  |
+|-----------------------------------------|------------------------------------------------------------------------------|
+| ```vget <item stack> <count>```         | Gives yourself a ghost item. In Creative it will be ghost, until you use it. |
+| ```vsetblock <blockPos> <blockState>``` | Sets a the block at <blockPos> to the block <blockState>.                    |
 
-if you like this mod, I recommend getting [ClientCommands](https://modrinth.com/mod/client-commands)
+</details> 
+
+if you like this mod, I also recommend getting [ClientCommands](https://modrinth.com/mod/client-commands)
