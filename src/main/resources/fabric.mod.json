@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "clientgive",
+  "id": "voidcommands",
   "version": "${version}",
-  "name": "ClientGive",
-  "description": "Adds a command to give yourself a ghost item (cget)",
+  "name": "Void Commands",
+  "description": "Adds various client side commands, prefixed with 'v'",
   "authors": [
     "TheVoidBlock"
   ],
@@ -13,15 +13,15 @@
     "issues": "https://github.com/thevoidblock/clientgive/issues"
   },
   "license": "GPL-3.0",
-  "icon": "assets/clientgive/icon.png",
+  "icon": "assets/voidcommands/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "com.thevoidblock.clientgive.ClientGive"
+      "com.thevoidblock.voidcommands.VoidCommands"
     ]
   },
   "mixins": [
-    "clientgive.mixins.json"
+    "voidcommands.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

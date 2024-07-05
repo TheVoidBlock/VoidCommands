@@ -1,4 +1,4 @@
-package com.thevoidblock.clientgive.commands;
+package com.thevoidblock.voidcommands.commands;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.item.ItemStack;
 
-import static com.thevoidblock.clientgive.ClientGive.CLIENT;
+import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 

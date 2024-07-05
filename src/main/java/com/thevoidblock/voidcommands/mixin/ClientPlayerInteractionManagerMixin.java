@@ -1,6 +1,6 @@
-package com.thevoidblock.clientgive.mixin;
+package com.thevoidblock.voidcommands.mixin;
 
-import com.thevoidblock.clientgive.TempConfig;
+import com.thevoidblock.voidcommands.TempConfig;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
@@ -48,7 +48,7 @@ public class ClientPlayerInteractionManagerMixin {
             return;
         } else {
             MutableObject<ActionResult> mutableObject = new MutableObject();
-            if(TempConfig.ghostPlacing)
+            if(TempConfig.ghostPlacement)
                 mutableObject.setValue(this.interactBlockInternal(player, hand, hitResult));
             else
                 this.sendSequencedPacket(this.client.world, (sequence) -> {

@@ -1,15 +1,15 @@
-package com.thevoidblock.clientgive;
+package com.thevoidblock.voidcommands;
 
-import com.thevoidblock.clientgive.commands.VGetCommand;
-import com.thevoidblock.clientgive.commands.VSetBlockCommand;
+import com.thevoidblock.voidcommands.commands.VGetCommand;
+import com.thevoidblock.voidcommands.commands.VSetBlockCommand;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ClientGive implements ClientModInitializer {
+public class VoidCommands implements ClientModInitializer {
 
-    public static final String MOD_ID = "clientgive";
+    public static final String MOD_ID = "voidcommands";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final MinecraftClient CLIENT = MinecraftClient.getInstance();
 
