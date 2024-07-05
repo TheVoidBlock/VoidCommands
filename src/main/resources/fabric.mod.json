@@ -8,9 +8,9 @@
     "TheVoidBlock"
   ],
   "contact": {
-    "homepage": "modrinth.com/mod/clientgive",
-    "sources": "https://github.com/thevoidblock/clientgive",
-    "issues": "https://github.com/thevoidblock/clientgive/issues"
+    "homepage": "modrinth.com/mod/voidcommands",
+    "sources": "https://github.com/thevoidblock/voidcommands",
+    "issues": "https://github.com/thevoidblock/voidcommands/issues"
   },
   "license": "GPL-3.0",
   "icon": "assets/voidcommands/icon.png",
