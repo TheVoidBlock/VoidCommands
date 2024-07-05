@@ -37,7 +37,7 @@ public class VGhostPlacementCommand {
         assert CLIENT.player != null;
         CLIENT.player.sendMessage(
                 Text.translatable(String.format("chat.%s.ghost_placement_toggle", MOD_ID)).withColor(Color.WHITE.getRGB()).append(Text.literal(" "))
-                        .append(Text.translatable(String.format(TempConfig.ghostPlacement ? "chat.%s.toggle_off" : "chat.%s.toggle_on", MOD_ID))
+                        .append(Text.translatable(String.format(TempConfig.ghostPlacement ? "chat.%s.toggle_on" : "chat.%s.toggle_off", MOD_ID))
                                 .withColor(TempConfig.ghostPlacement ? Color.RED.getRGB() : Color.GREEN.getRGB())
         ), true);
         return 1;
