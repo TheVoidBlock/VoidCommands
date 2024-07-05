@@ -15,9 +15,7 @@ public class VoidCommands implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-
-        VGetCommand.register();
-        VSetBlockCommand.register();
+        VoidCommandsRegistration.registerAll();
 
         LOGGER.info("{} initialized!", MOD_ID);
     }
