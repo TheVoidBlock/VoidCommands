@@ -1,4 +1,7 @@
 # Ghost Item Giver
+
+All commands are prefixed with 'v'
+
 Adds a command ```/vget <item> <count>``` to get a ghost item.
 In creative mode the items will be ghost, until you use them.
 
