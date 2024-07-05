@@ -12,18 +12,18 @@ import static com.thevoidblock.clientgive.ClientGive.CLIENT;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
-public class CGetCommand {
+public class VGetCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
-                        literal("cget")
+                        literal("vget")
                                 .then(
                                         argument("item", CItemArgument.itemStack(registryAccess))
-                                                .executes(CGetCommand::getItem)
+                                                .executes(VGetCommand::getItem)
 
                                         .then(
                                                 argument("count", IntegerArgumentType.integer(1))
-                                                        .executes(CGetCommand::getItemCount)
+                                                        .executes(VGetCommand::getItemCount)
                                         )
                                 )
                 ));

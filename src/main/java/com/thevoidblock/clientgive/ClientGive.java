@@ -1,7 +1,7 @@
 package com.thevoidblock.clientgive;
 
-import com.thevoidblock.clientgive.commands.CGetCommand;
-import com.thevoidblock.clientgive.commands.CSetBlockCommand;
+import com.thevoidblock.clientgive.commands.VGetCommand;
+import com.thevoidblock.clientgive.commands.VSetBlockCommand;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.client.MinecraftClient;
 import org.slf4j.Logger;
@@ -16,8 +16,8 @@ public class ClientGive implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
-        CGetCommand.register();
-        CSetBlockCommand.register();
+        VGetCommand.register();
+        VSetBlockCommand.register();
 
         LOGGER.info("{} initialized!", MOD_ID);
     }

@@ -12,16 +12,16 @@ import static com.thevoidblock.clientgive.ClientGive.CLIENT;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
-public class CSetBlockCommand {
+public class VSetBlockCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
-                        literal("csetblock")
+                        literal("vsetblock")
                                 .then(
                                         argument("pos", CBlockPosArgument.blockPos())
                                                 .then(
                                                         argument("block", CBlockStateArgument.blockState(registryAccess))
-                                                                .executes(CSetBlockCommand::setBlock)
+                                                                .executes(VSetBlockCommand::setBlock)
         ))));
     }
 
