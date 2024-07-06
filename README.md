@@ -1,5 +1,5 @@
 
-# Ghost Item Giver
+# Void Commands
 
 All commands are prefixed with ```v```
 
