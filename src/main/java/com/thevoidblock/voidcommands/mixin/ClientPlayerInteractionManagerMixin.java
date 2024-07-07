@@ -38,9 +38,7 @@ public class ClientPlayerInteractionManagerMixin {
             method = "interactBlock",
             at = @At("HEAD"),
             cancellable = true
-    )
-
-    // This is for block placing, it checks if ghost placing is enabled in the config and chooses if it should send the packet
+    ) // This is for block placing, it checks if ghost placing is enabled in the config and chooses if it should send the packet
     public void interactBlock(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> info) {
         this.syncSelectedSlot();
         if (!this.client.world.getWorldBorder().contains(hitResult.getBlockPos())) {
