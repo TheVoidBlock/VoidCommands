@@ -5,5 +5,6 @@
 
   "chat.voidcommands.server_simulation_distance": "Server Simulation Distance",
   "chat.voidcommands.server_view_distance": "Server View Distance",
-  "chat.voidcommands.client_view_distance": "Client View Distance"
+  "chat.voidcommands.client_view_distance": "Client View Distance",
+  "chat.voidcommands.clamped_view_distance": "Clamped View Distance"
 }
