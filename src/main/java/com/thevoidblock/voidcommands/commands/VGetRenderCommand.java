@@ -15,6 +15,7 @@ public class VGetRenderCommand {
                         literal("vgetrender").executes(VGetRenderCommand::execute)
         ));
     }
+
     private static int execute(CommandContext<FabricClientCommandSource> context) {
         context.getSource().sendFeedback(
                 formatKeyValue(String.format("chat.%s.server_simulation_distance", MOD_ID), CLIENT.world.getSimulationDistance()).append("\n")
