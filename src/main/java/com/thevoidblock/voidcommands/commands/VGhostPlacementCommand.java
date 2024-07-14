@@ -3,6 +3,8 @@ package com.thevoidblock.voidcommands.commands;
 import com.mojang.brigadier.context.CommandContext;
 import com.thevoidblock.voidcommands.TempConfig;
 import dev.xpple.clientarguments.arguments.CEnumArgument;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import com.thevoidblock.voidcommands.util.BooleanToggles;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
@@ -15,6 +17,7 @@ import static com.thevoidblock.voidcommands.VoidCommands.MOD_ID;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
+@Environment(EnvType.CLIENT)
 public class VGhostPlacementCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
