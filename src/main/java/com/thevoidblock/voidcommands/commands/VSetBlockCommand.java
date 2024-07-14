@@ -31,7 +31,8 @@ public class VSetBlockCommand {
     private static int setBlock(CommandContext<FabricClientCommandSource> context) {
         BlockPos blockPos = CBlockPosArgument.getBlockPos(context, "pos");
         BlockState blockState = CBlockStateArgument.getBlockState(context, "block").getState();
-        
+
+        assert CLIENT.world != null; // If you are running this command, you should be in a world, right?
         CLIENT.world.setBlockState(blockPos, blockState);
         return 1;
     }
