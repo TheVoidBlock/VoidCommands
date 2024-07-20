@@ -29,7 +29,7 @@ public class VGetCommand {
                                                         .executes(VGetCommand::getItemCount)
                                         )
                                 )
-                ));
+        ));
     }
 
     private static int getItem(CommandContext<FabricClientCommandSource> context) {
