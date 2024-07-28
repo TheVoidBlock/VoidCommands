@@ -8,9 +8,12 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.block.BlockState;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
+import static com.thevoidblock.voidcommands.VoidCommands.MOD_ID;
+import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
@@ -34,6 +37,13 @@ public class VSetBlockCommand {
 
         assert CLIENT.world != null; // If you are running this command, you should be in a world, right?
         CLIENT.world.setBlockState(blockPos, blockState);
+
+        context.getSource().sendFeedback(
+                Text.translatable(format("chat.%s.setblock", MOD_ID))
+                        .append(" ")
+                        .append(blockPos.toShortString())
+        );
+
         return 1;
     }
 }
