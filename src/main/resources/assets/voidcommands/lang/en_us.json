@@ -3,6 +3,7 @@
   "chat.voidcommands.toggle_on": "ON",
   "chat.voidcommands.toggle_off": "OFF",
 
+  "chat.voidcommands.render_info_header": "Client/Server Render Information:",
   "chat.voidcommands.server_simulation_distance": "Server Simulation Distance",
   "chat.voidcommands.server_view_distance": "Server View Distance",
   "chat.voidcommands.client_view_distance": "Client View Distance",
