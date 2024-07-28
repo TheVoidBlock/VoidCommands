@@ -9,5 +9,7 @@
   "chat.voidcommands.client_view_distance": "Client View Distance",
   "chat.voidcommands.clamped_view_distance": "Clamped View Distance",
 
-  "chat.voidcommands.setblock": "Changed the block at"
+  "chat.voidcommands.setblock": "Changed the block at",
+
+  "chat.voidcommands.receive_item": "Received"
 }
