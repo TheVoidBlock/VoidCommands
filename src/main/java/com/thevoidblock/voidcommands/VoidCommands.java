@@ -23,12 +23,4 @@ public class VoidCommands implements ClientModInitializer {
 
         LOGGER.info("{} initialized!", MOD_ID);
     }
-
-    public static <T extends Number> MutableText formatKeyValue(String key, T value) {
-        return
-                Text.translatable(key).formatted(Formatting.AQUA)
-                        .append(Text.literal(": ").formatted(Formatting.WHITE))
-                        .append(Text.literal(value.toString()).formatted(Formatting.GOLD))
-                ;
-    }
 }
