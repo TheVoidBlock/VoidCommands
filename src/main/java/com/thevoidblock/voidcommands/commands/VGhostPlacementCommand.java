@@ -2,7 +2,7 @@ package com.thevoidblock.voidcommands.commands;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.thevoidblock.voidcommands.TempConfig;
-import dev.xpple.clientarguments.arguments.CEnumArgument;
+import dev.xpple.clientarguments.arguments.CEnumArgumentType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -23,18 +23,18 @@ public class VGhostPlacementCommand {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
                         literal("vghostplacement")
-                                .then(argument("toggle", CEnumArgument.enumArg(BooleanToggles.class))
+                                .then(argument("toggle", CEnumArgumentType.enumArg(BooleanToggles.class))
                                         .executes(VGhostPlacementCommand::ghostPlacementToggle)
         )));
     }
 
     private static int ghostPlacementToggle(CommandContext<FabricClientCommandSource> context) {
 
-        BooleanToggles toggle = CEnumArgument.getEnum(context, "toggle");
+        BooleanToggles toggle = CEnumArgumentType.getEnum(context, "toggle");
         switch (toggle) {
-            case BooleanToggles.ON -> TempConfig.ghostPlacement = true;
-            case BooleanToggles.OFF -> TempConfig.ghostPlacement = false;
-            case BooleanToggles.TOGGLE -> TempConfig.ghostPlacement = !TempConfig.ghostPlacement;
+            case ON -> TempConfig.ghostPlacement = true;
+            case OFF -> TempConfig.ghostPlacement = false;
+            case TOGGLE -> TempConfig.ghostPlacement = !TempConfig.ghostPlacement;
         }
 
         assert CLIENT.player != null;

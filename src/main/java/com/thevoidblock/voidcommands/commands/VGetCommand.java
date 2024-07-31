@@ -3,7 +3,7 @@ package com.thevoidblock.voidcommands.commands;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import dev.xpple.clientarguments.arguments.CItemArgument;
+import dev.xpple.clientarguments.arguments.CItemStackArgumentType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -24,7 +24,7 @@ public class VGetCommand {
                 (dispatcher, registryAccess) -> dispatcher.register(
                         literal("vget")
                                 .then(
-                                        argument("item", CItemArgument.itemStack(registryAccess))
+                                        argument("item", CItemStackArgumentType.itemStack(registryAccess))
                                                 .executes(VGetCommand::getItem)
 
                                         .then(
@@ -38,7 +38,7 @@ public class VGetCommand {
     private static int getItem(CommandContext<FabricClientCommandSource> context) {
         try {
             giveItem(context,
-                    CItemArgument.getItemStackArgument(context, "item").createStack(1, false)
+                    CItemStackArgumentType.getCItemStackArgument(context, "item").createStack(1, false)
             );
         } catch (CommandSyntaxException e) {
             throw new RuntimeException(e);
@@ -49,7 +49,7 @@ public class VGetCommand {
     private static int getItemCount(CommandContext<FabricClientCommandSource> context) {
         try {
             giveItem(context,
-                    CItemArgument.getItemStackArgument(context, "item").createStack(IntegerArgumentType.getInteger(context, "count"), false)
+                    CItemStackArgumentType.getCItemStackArgument(context, "item").createStack(IntegerArgumentType.getInteger(context, "count"), false)
             );
         } catch (CommandSyntaxException e) {
             throw new RuntimeException(e);

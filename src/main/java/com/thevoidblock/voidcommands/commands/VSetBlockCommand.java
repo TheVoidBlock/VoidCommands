@@ -1,8 +1,8 @@
 package com.thevoidblock.voidcommands.commands;
 
 import com.mojang.brigadier.context.CommandContext;
-import dev.xpple.clientarguments.arguments.CBlockPosArgument;
-import dev.xpple.clientarguments.arguments.CBlockStateArgument;
+import dev.xpple.clientarguments.arguments.CBlockPosArgumentType;
+import dev.xpple.clientarguments.arguments.CBlockStateArgumentType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -24,16 +24,16 @@ public class VSetBlockCommand {
                 (dispatcher, registryAccess) -> dispatcher.register(
                         literal("vsetblock")
                                 .then(
-                                        argument("pos", CBlockPosArgument.blockPos())
+                                        argument("pos", CBlockPosArgumentType.blockPos())
                                                 .then(
-                                                        argument("block", CBlockStateArgument.blockState(registryAccess))
+                                                        argument("block", CBlockStateArgumentType.blockState(registryAccess))
                                                                 .executes(VSetBlockCommand::setBlock)
         ))));
     }
 
     private static int setBlock(CommandContext<FabricClientCommandSource> context) {
-        BlockPos blockPos = CBlockPosArgument.getBlockPos(context, "pos");
-        BlockState blockState = CBlockStateArgument.getBlockState(context, "block").getState();
+        BlockPos blockPos = CBlockPosArgumentType.getCBlockPos(context, "pos");
+        BlockState blockState = CBlockStateArgumentType.getCBlockState(context, "block").getBlockState();
 
         assert CLIENT.world != null; // If you are running this command, you should be in a world, right?
         CLIENT.world.setBlockState(blockPos, blockState);
