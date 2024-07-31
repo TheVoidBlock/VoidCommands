@@ -8,7 +8,7 @@ public class VoidCommandsStyler {
 
     public static final Formatting HEADER_FORMATTING = Formatting.WHITE;
 
-    public static <T extends Number> MutableText formatKeyValue(String key, T value) {
+    public static <T extends Number> MutableText formatTranslatableNumber(String key, T value) {
         return
                 Text.translatable(key).formatted(Formatting.AQUA)
                         .append(Text.literal(": ").formatted(Formatting.WHITE))
