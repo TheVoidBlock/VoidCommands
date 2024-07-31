@@ -10,7 +10,7 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.text.Text;
 
 import static com.thevoidblock.voidcommands.VoidCommands.*;
-import static com.thevoidblock.voidcommands.VoidCommandsStyler.formatKeyValue;
+import static com.thevoidblock.voidcommands.VoidCommandsStyler.formatTranslatableNumber;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
 @Environment(EnvType.CLIENT)
@@ -26,10 +26,10 @@ public class VGetRenderCommand {
         assert CLIENT.world != null;
         context.getSource().sendFeedback(
                 Text.translatable(String.format("chat.%s.render_info_header", MOD_ID)).formatted(VoidCommandsStyler.HEADER_FORMATTING).append("\n\n")
-                        .append(formatKeyValue(String.format("chat.%s.server_simulation_distance", MOD_ID), CLIENT.world.getSimulationDistance())).append("\n")
-                        .append(formatKeyValue(String.format("chat.%s.server_view_distance", MOD_ID), ((GameOptionsAccessor)CLIENT.options).getServerViewDistance())).append("\n")
-                        .append(formatKeyValue(String.format("chat.%s.client_view_distance", MOD_ID), CLIENT.options.getViewDistance().getValue())).append("\n")
-                        .append(formatKeyValue(String.format("chat.%s.clamped_view_distance", MOD_ID), CLIENT.options.getClampedViewDistance()))
+                        .append(formatTranslatableNumber(String.format("chat.%s.server_simulation_distance", MOD_ID), CLIENT.world.getSimulationDistance())).append("\n")
+                        .append(formatTranslatableNumber(String.format("chat.%s.server_view_distance", MOD_ID), ((GameOptionsAccessor)CLIENT.options).getServerViewDistance())).append("\n")
+                        .append(formatTranslatableNumber(String.format("chat.%s.client_view_distance", MOD_ID), CLIENT.options.getViewDistance().getValue())).append("\n")
+                        .append(formatTranslatableNumber(String.format("chat.%s.clamped_view_distance", MOD_ID), CLIENT.options.getClampedViewDistance()))
         );
         return 1;
     }
