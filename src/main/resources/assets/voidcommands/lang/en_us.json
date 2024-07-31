@@ -11,5 +11,8 @@
 
   "chat.voidcommands.setblock": "Changed the block at",
 
-  "chat.voidcommands.receive_item": "Received"
+  "chat.voidcommands.receive_item": "Received",
+
+  "chat.voidcommands.current_location": "Current Location",
+  "chat.voidcommands.location_dimension_separator": "in"
 }
