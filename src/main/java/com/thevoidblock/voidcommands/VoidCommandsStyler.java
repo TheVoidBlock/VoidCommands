@@ -21,15 +21,13 @@ public class VoidCommandsStyler {
                 ;
     }
 
-    public static MutableText formatVec3d(Vec3d vector) {
+    public static MutableText formatPlayerPos(Vec3d vector) {
         return
-                Text.literal(Double.toString(vector.x)).formatted(NUMBER_FORMATTING)
+                Text.literal(String.format("%.3f", vector.x)).formatted(NUMBER_FORMATTING)
                         .append(Text.literal(", ").formatted(SEPERATOR_FORMATTING))
-                        .append(Text.literal(Double.toString(vector.x)).formatted(NUMBER_FORMATTING))
+                        .append(Text.literal(String.format("%.5f", vector.y)).formatted(NUMBER_FORMATTING))
                         .append(Text.literal(", ").formatted(SEPERATOR_FORMATTING))
-                        .append(Text.literal(Double.toString(vector.y)).formatted(NUMBER_FORMATTING))
-                        .append(Text.literal(", ").formatted(SEPERATOR_FORMATTING))
-                        .append(Text.literal(Double.toString(vector.z)).formatted(NUMBER_FORMATTING))
+                        .append(Text.literal(String.format("%.3f", vector.z)).formatted(NUMBER_FORMATTING))
                 ;
     }
 }
