@@ -15,5 +15,6 @@ public class VoidCommandsRegistration {
         VSetBlockCommand.register();
         VGhostPlacementCommand.register();
         VGetRenderCommand.register();
+        VGetLocationCommand.register();
     }
 }
