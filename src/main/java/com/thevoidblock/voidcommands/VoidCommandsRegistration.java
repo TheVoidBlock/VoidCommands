@@ -16,5 +16,6 @@ public class VoidCommandsRegistration {
         VGhostPlacementCommand.register();
         VGetRenderCommand.register();
         VGetLocationCommand.register();
+        VSummonCommand.register();
     }
 }
