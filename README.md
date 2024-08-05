@@ -13,6 +13,8 @@ All commands are prefixed with ```v```
 | ```vghostplacement <booleanToggle>```   | Toggles if interacting with blocks sends a packet. This includes placing blocks, using buttons, etc. |
 | ```vgetrender```                        | Prints simulation/view distance in chat.                                                             |
 | ```vgetlocation```                      | Prints current coordinates, and dimension in chat.                                                   |
+| ```vsummon <entity> <location> <nbt>``` | Summons an entity client-side (you can be nudged by client side entities)                            |
+| ```vkill <entities>```                  | Removes entities from the client world                                                               |
 
 </details> 
 
