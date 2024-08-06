@@ -25,7 +25,7 @@ public class VGetRenderCommand {
     private static int execute(CommandContext<FabricClientCommandSource> context) {
         assert CLIENT.world != null;
         context.getSource().sendFeedback(
-                Text.translatable(String.format("chat.%s.render_info_header", MOD_ID)).formatted(VoidCommandsStyler.HEADER_FORMATTING).append("\n\n")
+                Text.translatable(String.format("chat.%s.render_info_header", MOD_ID)).formatted(VoidCommandsStyler.HEADER_FORMATTING).append("\n")
                         .append(formatTranslatableNumber(String.format("chat.%s.server_simulation_distance", MOD_ID), CLIENT.world.getSimulationDistance())).append("\n")
                         .append(formatTranslatableNumber(String.format("chat.%s.server_view_distance", MOD_ID), ((GameOptionsAccessor)CLIENT.options).getServerViewDistance())).append("\n")
                         .append(formatTranslatableNumber(String.format("chat.%s.client_view_distance", MOD_ID), CLIENT.options.getViewDistance().getValue())).append("\n")
