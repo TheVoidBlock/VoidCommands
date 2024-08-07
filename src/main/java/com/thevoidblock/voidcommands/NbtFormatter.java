@@ -25,33 +25,35 @@ package com.thevoidblock.voidcommands;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NbtFormatter {
+
+    public static final Formatting STRING_COLOR = Formatting.GREEN;
+    public static final Formatting QUOTATION_COLOR = Formatting.WHITE;
+    public static final Formatting SEPARATION_COLOR = Formatting.WHITE;
+    public static final Formatting INTEGER_COLOR = Formatting.GOLD;
+    public static final Formatting TYPE_COLOR = Formatting.RED;
+    public static final Formatting FIELD_COLOR = Formatting.AQUA;
+
     public static Text FormatNBTText(Text text) {
         /*
             Get the NBT list that we want to show.
             And we set the symbols up where we look for, so we can detect what to give which color.
          */
         String nbtList = String.valueOf(text.getString());
+
+        if(nbtList.charAt(0) != '{') {
+            nbtList = "{" + nbtList;
+            nbtList += "}";
+        }
+
         Pattern p = Pattern.compile("[{}:\"\\[\\],']", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(nbtList);
 
         // Create new literalText, which we will be adding to the list.
         MutableText mutableText = Text.empty();
-
-        /*  **Loop through the NBT data**
-         *
-         */
-        // config
-        Formatting stringColor = Formatting.GREEN;
-        Formatting quotationColor = Formatting.WHITE;
-        Formatting separationColor = Formatting.WHITE;
-        Formatting integerColor = Formatting.GOLD;
-        Formatting typeColor = Formatting.RED;
-        Formatting fieldColor = Formatting.AQUA;
 
         int lastIndex = 0;
         Boolean singleQuotationMark = Boolean.FALSE;
@@ -67,12 +69,12 @@ public class NbtFormatter {
              */
             if (nbtList.charAt(m.start()) == '\'') {
                 if (singleQuotationMark.equals(Boolean.FALSE)) { // If false color only the quotation mark
-                    mutableText.append(Text.literal(String.valueOf(nbtList.charAt(m.start()))).formatted(quotationColor));
+                    mutableText.append(Text.literal(String.valueOf(nbtList.charAt(m.start()))).formatted(QUOTATION_COLOR));
                     singleQuotationMark = Boolean.TRUE;
                 }
                 else { // Else color the quotation mark and make the rest green
-                    mutableText.append(Text.literal(nbtList.substring(lastIndex+1,m.start())).formatted(stringColor));
-                    mutableText.append(Text.literal(String.valueOf(nbtList.charAt(m.start()))).formatted(quotationColor));
+                    mutableText.append(Text.literal(nbtList.substring(lastIndex+1,m.start())).formatted(STRING_COLOR));
+                    mutableText.append(Text.literal(String.valueOf(nbtList.charAt(m.start()))).formatted(QUOTATION_COLOR));
                     singleQuotationMark = Boolean.FALSE;
                 }
                 lastString = String.valueOf(nbtList.charAt(m.start()));
@@ -94,7 +96,7 @@ public class NbtFormatter {
                         Stores the lastString and lastIndex
                  */
                 if (nbtList.charAt(m.start()) == '{' || nbtList.charAt(m.start()) == '[' ) {
-                    mutableText.append(Text.literal(String.valueOf(nbtList.charAt(m.start()))).formatted(separationColor));
+                    mutableText.append(Text.literal(String.valueOf(nbtList.charAt(m.start()))).formatted(SEPARATION_COLOR));
                     lastString = String.valueOf(nbtList.charAt(m.start()));
                     lastIndex = m.start();
                 }
@@ -114,17 +116,17 @@ public class NbtFormatter {
                             nbtList.charAt(m.start()-1) == 'l' || nbtList.charAt(m.start()-1) == 'L' ||
                             nbtList.charAt(m.start()-1) == 'f' || nbtList.charAt(m.start()-1) == 'F'
                     ) {
-                        mutableText.append(Text.literal(nbtList.substring(lastIndex+1,m.start()-1)).formatted(integerColor));
-                        mutableText.append(Text.literal(nbtList.substring(m.start()-1,m.start())).formatted(typeColor));
+                        mutableText.append(Text.literal(nbtList.substring(lastIndex+1,m.start()-1)).formatted(INTEGER_COLOR));
+                        mutableText.append(Text.literal(nbtList.substring(m.start()-1,m.start())).formatted(TYPE_COLOR));
 
                     }
                     else {
-                        mutableText.append(Text.literal(nbtList.substring(lastIndex+1,m.start())).formatted(integerColor));
+                        mutableText.append(Text.literal(nbtList.substring(lastIndex+1,m.start())).formatted(INTEGER_COLOR));
                     }
 
-                    mutableText.append(Text.literal(String.valueOf(nbtList.charAt(m.start())))).formatted(separationColor);
+                    mutableText.append(Text.literal(String.valueOf(nbtList.charAt(m.start())))).formatted(SEPARATION_COLOR);
 
-                    if (nbtList.charAt(m.start()) == ',') { mutableText.append(Text.literal(" ").formatted(separationColor)); }
+                    if (nbtList.charAt(m.start()) == ',') { mutableText.append(Text.literal(" ").formatted(SEPARATION_COLOR)); }
                     lastString = String.valueOf(nbtList.charAt(m.start()));
                     lastIndex = m.start();
                 }
@@ -139,10 +141,10 @@ public class NbtFormatter {
                  */
                 if (nbtList.charAt(m.start()) == ':') { // 4).
                     if (!lastString.equals("\"")) {
-                        mutableText.append(Text.literal(nbtList.substring(lastIndex+1,m.start())).formatted(fieldColor));
+                        mutableText.append(Text.literal(nbtList.substring(lastIndex+1,m.start())).formatted(FIELD_COLOR));
 
-                        mutableText.append((Text.literal(String.valueOf(nbtList.charAt(m.start())))).formatted(separationColor));
-                        mutableText.append(Text.literal(" ").formatted(separationColor));
+                        mutableText.append((Text.literal(String.valueOf(nbtList.charAt(m.start())))).formatted(SEPARATION_COLOR));
+                        mutableText.append(Text.literal(" ").formatted(SEPARATION_COLOR));
                         lastString = String.valueOf(nbtList.charAt(m.start()));
                         lastIndex = m.start();
                     }
@@ -160,12 +162,12 @@ public class NbtFormatter {
                 if (nbtList.charAt(m.start()) == '"') {
                     if (lastString.equals("\"")){
 
-                        mutableText.append(Text.literal(nbtList.substring(lastIndex+1,m.start())).formatted(stringColor));
+                        mutableText.append(Text.literal(nbtList.substring(lastIndex+1,m.start())).formatted(STRING_COLOR));
 
-                        mutableText.append(Text.literal(String.valueOf(nbtList.charAt(m.start()))).formatted(quotationColor));
+                        mutableText.append(Text.literal(String.valueOf(nbtList.charAt(m.start()))).formatted(QUOTATION_COLOR));
                     }
                     else {
-                        mutableText.append(Text.literal(String.valueOf(nbtList.charAt(m.start()))).formatted(quotationColor));
+                        mutableText.append(Text.literal(String.valueOf(nbtList.charAt(m.start()))).formatted(QUOTATION_COLOR));
                     }
                     lastString = String.valueOf(nbtList.charAt(m.start()));
                     lastIndex = m.start();
