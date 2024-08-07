@@ -18,5 +18,6 @@ public class VoidCommandsRegistration {
         VGetLocationCommand.register();
         VSummonCommand.register();
         VKillCommand.register();
+        VDataCommand.register();
     }
 }
