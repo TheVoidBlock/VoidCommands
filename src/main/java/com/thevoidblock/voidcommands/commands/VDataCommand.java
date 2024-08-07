@@ -22,8 +22,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.thevoidblock.voidcommands.NbtFormatter.FormatNBTText;
-import static com.thevoidblock.voidcommands.NbtFormatter.SEPARATION_COLOR;
+import static com.thevoidblock.voidcommands.NbtFormatter.*;
+import static com.thevoidblock.voidcommands.VoidCommandsStyler.KEY_FORMATTING;
+import static com.thevoidblock.voidcommands.VoidCommandsStyler.formatNameUUID;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
@@ -124,7 +125,6 @@ public class VDataCommand {
         return nbtElement;
     }
     private static <T extends Entity>Text getNbtQueryWithPrefix(T entity, Text nbt) {
-        assert entity.getDisplayName() != null;
-        return Text.translatable("commands.data.entity.query", ((MutableText)entity.getDisplayName()).append(String.format("(%s)", entity.getUuidAsString())), nbt);
+        return Text.translatable("commands.data.entity.query", formatNameUUID(entity), nbt);
     }
 }

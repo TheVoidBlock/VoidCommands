@@ -8,9 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
 
-import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
 import static com.thevoidblock.voidcommands.VoidCommands.MOD_ID;
 import static com.thevoidblock.voidcommands.VoidCommandsStyler.*;
 import static java.lang.String.format;
@@ -40,7 +38,7 @@ public class VGetLocationCommand {
                         .append(formatPlayerPos(
                                 entity.getPos()
                         )).append(" ")
-                        .append(Text.translatable(format("chat.%s.location_dimension_separator", MOD_ID)).formatted(SEPERATOR_FORMATTING)).append(" ")
+                        .append(Text.translatable(format("chat.%s.location_dimension_separator", MOD_ID)).formatted(SEPARATOR_FORMATTING)).append(" ")
                         .append(Text.literal(dimension.toString()).formatted(IDENTIFIER_FORMATTING))
         );
         return 1;
