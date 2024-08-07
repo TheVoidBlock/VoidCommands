@@ -48,10 +48,10 @@ public class VDataCommand {
                                                                         context -> executeGetPathScale(context, CEntityArgument.getEntities(context, "entity"), CNbtPathArgument.getNbtPath(context, "path"), IntegerArgumentType.getInteger(context, "scale"))
                                                                 )
                                                         ).executes(
-                                                                context -> executeGetPathScale(context, CEntityArgument.getEntities(context, "entity"), CNbtPathArgument.getNbtPath(context, "path"))
+                                                                context -> executeGetPath(context, CEntityArgument.getEntities(context, "entity"), CNbtPathArgument.getNbtPath(context, "path"))
                                                         )
                                                 ).executes(
-                                                    context -> executeGetPath(context, CEntityArgument.getEntities(context, "entity"))
+                                                    context -> executeGet(context, CEntityArgument.getEntities(context, "entity"))
                                                 )
                                 )
                         ).then(
@@ -65,11 +65,12 @@ public class VDataCommand {
         ));
     }
 
-    private static int executeGetPath(CommandContext<FabricClientCommandSource> context, Collection<? extends Entity> entities) throws CommandSyntaxException {
+    private static int executeGet(CommandContext<FabricClientCommandSource> context, Collection<? extends Entity> entities) throws CommandSyntaxException {
         context.getSource().sendFeedback(formatNBTText(entities, entity -> getNBT(entity).asString()));
         return entities.size();
     }
-    private static int executeGetPathScale(CommandContext<FabricClientCommandSource> context, Collection<? extends Entity> entities, CNbtPathArgument.NbtPath path) throws CommandSyntaxException {
+    @SuppressWarnings("rawtypes")
+    private static int executeGetPath(CommandContext<FabricClientCommandSource> context, Collection<? extends Entity> entities, CNbtPathArgument.NbtPath path) throws CommandSyntaxException {
         context.getSource().sendFeedback(formatNBTText(entities, entity -> path.getString() + ":" + getNbt(getNBT(entity), path).asString()));
 
         int i;
