@@ -36,7 +36,7 @@ public class VoidCommandsStyler {
     public static <T extends Entity>MutableText formatNameUUID(T entity) {
         assert entity.getDisplayName() != null;
         return ((MutableText)entity.getDisplayName()).formatted(KEY_FORMATTING)
-                .append(Text.literal("(").formatted(STRING_FORMATTING))
+                .append(Text.literal("(").formatted(SEPARATOR_FORMATTING))
                 .append(((MutableText)Text.of(entity.getUuid())).formatted(STRING_FORMATTING))
                 .append(Text.literal(")").formatted(SEPARATOR_FORMATTING));
     }
