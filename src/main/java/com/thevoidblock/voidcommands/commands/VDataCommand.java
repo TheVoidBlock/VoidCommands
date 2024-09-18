@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import static com.thevoidblock.voidcommands.NbtFormatter.*;
-import static com.thevoidblock.voidcommands.VoidCommandsStyler.*;
+import static com.thevoidblock.voidcommands.VoidCommandsStyler.formatNameUUID;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
@@ -103,14 +103,10 @@ public class VDataCommand {
         entities.stream().skip(1).forEach(
                 entity -> {
                     try {
-                        text
-                                .append(Text.literal(", ").formatted(SEPARATION_COLOR))
+                        text.append(Text.literal(", ").formatted(SEPARATION_COLOR))
                                 .append(getNbtQueryWithPrefix(entity, FormatNBTText(Text.literal(nbt.getString(entity)))));
                     } catch (CommandSyntaxException e) {
-                        text
-                                .append(formatNameUUID(entity))
-                                .append(Text.literal(": ").formatted(SEPARATOR_FORMATTING))
-                                .append(Text.literal(e.getMessage()).formatted(ERROR_FORMATTING));
+                        wrapper.commandSyntaxException = e;
                     }
                 }
         );
