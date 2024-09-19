@@ -8,6 +8,7 @@ import net.fabricmc.api.Environment;
 public class VoidCommandsRegistration {
     public static void registerAll() {
         registerCommands();
+        ChunkTracker.register();
     }
 
     public static void registerCommands() {
@@ -18,5 +19,6 @@ public class VoidCommandsRegistration {
         VGetLocationCommand.register();
         VSummonCommand.register();
         VKillCommand.register();
+        VQueryCommand.register();
     }
 }
