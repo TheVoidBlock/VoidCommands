@@ -16,12 +16,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 
-import javax.swing.text.html.parser.Entity;
-import java.util.Collection;
-
 import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
 import static com.thevoidblock.voidcommands.VoidCommandsStyler.ERROR_FORMATTING;
-import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.*;
 import static net.minecraft.SharedConstants.CHUNK_WIDTH;
 import static net.minecraft.text.Text.translatable;
@@ -133,6 +129,6 @@ public class VQueryCommand {
     }
 
     private static String getQueryArgument(CommandContext<FabricClientCommandSource> context) {
-        return context.getInput().split("\s+", 3)[2].split("\\s+\\d+$")[0];
+        return context.getInput().split("\\s+", 3)[2].split("\\s+\\d+$")[0];
     }
 }
