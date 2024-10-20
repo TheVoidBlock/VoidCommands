@@ -1,6 +1,4 @@
-
-# Void Commands
-
+# Void Commands <a href="https://github.com/TheVoidBlock/VoidCommands/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/TheVoidBlock/voidcommands?include_prereleases&sort=semver&display_name=tag&style=for-the-badge&logo=github"></a> <a href="https://modrinth.com/mod/voidcommands"><img alt="Modrinth Downloads" src="https://img.shields.io/modrinth/dt/voidcommands?style=for-the-badge&logo=modrinth&label=MODRINTH&color=%231BD96A"></a> <a href="https://www.gnu.org/licenses/gpl-3.0.html"><img alt="GNU GPL3" src="https://www.gnu.org/graphics/gplv3-127x51.png"></a>
 All commands are prefixed with ```v```
 
 <details>
