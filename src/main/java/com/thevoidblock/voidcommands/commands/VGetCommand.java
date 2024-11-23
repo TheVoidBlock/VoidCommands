@@ -11,8 +11,7 @@ import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
-import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
-import static com.thevoidblock.voidcommands.VoidCommands.MOD_ID;
+import static com.thevoidblock.voidcommands.VoidCommands.*;
 import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
@@ -22,7 +21,7 @@ public class VGetCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
-                        literal("vget")
+                        literal(format("%sget", COMMAND_PREFIX))
                                 .then(
                                         argument("item", CItemArgument.itemStack(registryAccess))
                                                 .executes(VGetCommand::getItem)

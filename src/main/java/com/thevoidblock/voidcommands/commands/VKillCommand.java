@@ -11,6 +11,8 @@ import net.minecraft.text.Text;
 import java.util.Collection;
 
 import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
+import static com.thevoidblock.voidcommands.VoidCommands.COMMAND_PREFIX;
+import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
@@ -18,7 +20,7 @@ public class VKillCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
-                        literal("vkill").then(argument(
+                        literal(format("%skill", COMMAND_PREFIX)).then(argument(
                                 "entities", CEntityArgument.entities()
                                 ).executes(
                                         VKillCommand::execute

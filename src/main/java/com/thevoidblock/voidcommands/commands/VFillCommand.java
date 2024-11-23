@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
+import static com.thevoidblock.voidcommands.VoidCommands.COMMAND_PREFIX;
+import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
@@ -24,7 +26,7 @@ public class VFillCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
-                        literal("vfill").then(
+                        literal(format("%sfill", COMMAND_PREFIX)).then(
                                 argument("pos1", CBlockPosArgument.blockPos()).then(
                                     argument("pos2", CBlockPosArgument.blockPos()).then(
                                             argument("blockState", CBlockStateArgument.blockState(registryAccess)).executes(

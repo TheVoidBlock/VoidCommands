@@ -11,6 +11,7 @@ import net.minecraft.text.Text;
 
 import static com.thevoidblock.voidcommands.VoidCommands.*;
 import static com.thevoidblock.voidcommands.VoidCommandsStyler.formatTranslatableNumber;
+import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
 @Environment(EnvType.CLIENT)
@@ -18,7 +19,7 @@ public class VGetRenderCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
-                        literal("vgetrender").executes(VGetRenderCommand::execute)
+                        literal(format("%sgetrender", COMMAND_PREFIX)).executes(VGetRenderCommand::execute)
         ));
     }
 

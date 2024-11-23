@@ -11,8 +11,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
-import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
-import static com.thevoidblock.voidcommands.VoidCommands.MOD_ID;
+import static com.thevoidblock.voidcommands.VoidCommands.*;
 import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
@@ -22,7 +21,7 @@ public class VSetBlockCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
-                        literal("vsetblock")
+                        literal(format("%ssetblock", COMMAND_PREFIX))
                                 .then(
                                         argument("pos", CBlockPosArgument.blockPos())
                                                 .then(

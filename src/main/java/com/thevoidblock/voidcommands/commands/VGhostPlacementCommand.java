@@ -12,8 +12,8 @@ import net.minecraft.text.Text;
 
 import java.awt.*;
 
-import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
-import static com.thevoidblock.voidcommands.VoidCommands.MOD_ID;
+import static com.thevoidblock.voidcommands.VoidCommands.*;
+import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
@@ -22,7 +22,7 @@ public class VGhostPlacementCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
-                        literal("vghostplacement")
+                        literal(format("%sghostplacement", COMMAND_PREFIX))
                                 .then(argument("toggle", CEnumArgument.enumArg(BooleanToggles.class))
                                         .executes(VGhostPlacementCommand::ghostPlacementToggle)
         )));

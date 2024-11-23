@@ -17,7 +17,9 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 
 import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
+import static com.thevoidblock.voidcommands.VoidCommands.COMMAND_PREFIX;
 import static com.thevoidblock.voidcommands.VoidCommandsStyler.ERROR_FORMATTING;
+import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.*;
 import static net.minecraft.SharedConstants.CHUNK_WIDTH;
 import static net.minecraft.text.Text.translatable;
@@ -32,7 +34,7 @@ public class VQueryCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
-                        literal("vquery").then(
+                        literal(format("%squery", COMMAND_PREFIX)).then(
                                 literal(ENTITY_QUERY_NAME).then(
                                         argument("entities", CEntityArgument.entities()).executes(
                                                 context -> executeEntities(context, CLIENT.options.getClampedViewDistance())

@@ -10,8 +10,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 
-import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
-import static com.thevoidblock.voidcommands.VoidCommands.MOD_ID;
+import static com.thevoidblock.voidcommands.VoidCommands.*;
 import static com.thevoidblock.voidcommands.VoidCommandsStyler.*;
 import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
@@ -21,7 +20,7 @@ public class VGetLocationCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
-                        literal("vgetlocation").executes(
+                        literal(format("%sgetlocation", COMMAND_PREFIX)).executes(
                                 context -> execute(context, context.getSource().getEntity())
                         ).then(argument("entity", CEntityArgument.entity()).executes(
                                 context -> execute(context, CEntityArgument.getEntity(context, "entity"))

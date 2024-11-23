@@ -13,6 +13,7 @@ public class VoidCommands implements ClientModInitializer {
     public static final String MOD_ID = "voidcommands";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final MinecraftClient CLIENT = MinecraftClient.getInstance();
+    public static final char COMMAND_PREFIX = 'v';
 
     @Override
     public void onInitializeClient() {

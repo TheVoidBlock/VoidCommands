@@ -14,6 +14,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.math.Vec3d;
 
 import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
+import static com.thevoidblock.voidcommands.VoidCommands.COMMAND_PREFIX;
+import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
@@ -21,7 +23,7 @@ public class VSummonCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess) -> dispatcher.register(
-                        literal("vsummon").then(argument(
+                        literal(format("%ssummon", COMMAND_PREFIX)).then(argument(
                                 "entity", CResourceArgument.registryEntry(registryAccess, RegistryKeys.ENTITY_TYPE)
                         ).suggests(CSuggestionProviders.SUMMONABLE_ENTITIES).executes(
                             context -> execute(context, context.getSource().getPosition(), new NbtCompound())
