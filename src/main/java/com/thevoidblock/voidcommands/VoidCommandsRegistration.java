@@ -20,5 +20,6 @@ public class VoidCommandsRegistration {
         VSummonCommand.register();
         VKillCommand.register();
         VQueryCommand.register();
+        VFillCommand.register();
     }
 }
