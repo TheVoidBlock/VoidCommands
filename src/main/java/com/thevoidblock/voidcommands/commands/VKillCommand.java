@@ -40,7 +40,6 @@ public class VKillCommand {
         } else {
             context.getSource().sendFeedback(Text.translatable("commands.kill.success.multiple", targets.size()));
         }
-        // TODO: add feedback
         return targets.size();
     }
 }
