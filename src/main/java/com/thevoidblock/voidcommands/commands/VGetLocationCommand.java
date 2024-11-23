@@ -30,6 +30,7 @@ public class VGetLocationCommand {
 
     private static int execute(CommandContext<FabricClientCommandSource> context, Entity entity) {
 
+        assert entity.getWorld().getDimensionEntry().getKey().isPresent();
         final Identifier dimension = entity.getWorld().getDimensionEntry().getKey().get().getValue();
 
         assert entity.getDisplayName() != null;
