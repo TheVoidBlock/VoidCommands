@@ -8,7 +8,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
 
 import static com.thevoidblock.voidcommands.VoidCommands.*;
 import static com.thevoidblock.voidcommands.VoidCommandsStyler.*;
