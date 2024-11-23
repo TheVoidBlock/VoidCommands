@@ -6,16 +6,17 @@ All commands are prefixed with ```v```
 <details>
 <summary>Commands</summary>
 
-| Command                                                    | Description                                                                                                      |
-|------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
-| ```vget <item> <count>```                                  | Gives yourself a ghost item. In Creative it will be ghost, until you use it.                                     |
-| ```vsetblock <pos> <block>```                              | Sets a the block at <blockPos> to the block <blockState>.                                                        |
-| ```vghostplacement <boolean>```                            | Toggles if interacting with blocks sends a packet. This includes placing blocks, using buttons, etc.             |
-| ```vgetrender```                                           | Prints simulation/view distance in chat.                                                                         |
-| ```vgetlocation <entity>```                                | Prints current coordinates, and dimension in chat.                                                               |
-| ```vsummon <entity> <location> <nbt>```                    | Summons an entity client-side (you can be nudged by client side entities)                                        |
-| ```vkill <entities>```                                     | Removes entities from the client world                                                                           |
-| ```vquery [blocks\|entities] <block\|entity> <distance>``` | Prints the amount of entities/blocks loaded within <distance> chunks. Default distance is your render distance.  |
+| Command                                                                    | Description                                                                                                     |
+|----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| ```vget <item> <count>```                                                  | Gives yourself a ghost item. In Creative it will be ghost, until you use it.                                    |
+| ```vsetblock <pos> <block>```                                              | Sets a the block at <blockPos> to the block <blockState>.                                                       |
+| ```vghostplacement <boolean>```                                            | Toggles if interacting with blocks sends a packet. This includes placing blocks, using buttons, etc.            |
+| ```vgetrender```                                                           | Prints simulation/view distance in chat.                                                                        |
+| ```vgetlocation <entity>```                                                | Prints current coordinates, and dimension in chat.                                                              |
+| ```vsummon <entity> <location> <nbt>```                                    | Summons an entity client-side (you can be nudged by client side entities)                                       |
+| ```vkill <entities>```                                                     | Removes entities from the client world                                                                          |
+| ```vquery [blocks\|entities] <block\|entity> <distance>```                 | Prints the amount of entities/blocks loaded within <distance> chunks. Default distance is your render distance. |
+| ```vfill <pos1> <pos2> <block> [hollow\|keep\|outline\|replace] [block]``` | Fills an area with blocks (client-side). Use vanilla `/fill` syntax.                                            |
 
 </details> 
 
