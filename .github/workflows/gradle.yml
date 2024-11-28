@@ -1,4 +1,4 @@
-name: VoidCommands dev build
+name: VoidCommands Dev Build
 
 on:
   push:
@@ -27,10 +27,10 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
-    - name: Archive build
+    - name: Archive Build
       uses: actions/upload-artifact@v4
       with:
-        name: VoidCommands build
+        name: VoidCommands Build
         path: build/libs/*.jar
       
   dependency-submission:
