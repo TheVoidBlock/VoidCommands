@@ -34,7 +34,7 @@ public class VSetBlockCommand {
         BlockPos blockPos = CBlockPosArgument.getBlockPos(context, "pos");
         BlockState blockState = CBlockStateArgument.getBlockState(context, "block").getState();
 
-        assert CLIENT.world != null; // If you are running this command, you should be in a world, right?
+        assert CLIENT.world != null;
         CLIENT.world.setBlockState(blockPos, blockState);
 
         context.getSource().sendFeedback(
