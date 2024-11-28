@@ -22,5 +22,6 @@ public class VoidCommandsRegistration {
         VQueryCommand.register();
         VFillCommand.register();
         VStopCommand.register();
+        VResizeCommand.register();
     }
 }
