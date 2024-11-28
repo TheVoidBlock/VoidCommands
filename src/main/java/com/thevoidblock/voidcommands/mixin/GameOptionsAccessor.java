@@ -7,5 +7,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(GameOptions.class)
 public interface GameOptionsAccessor {
     @Accessor("serverViewDistance")
-    public int getServerViewDistance();
+    int getServerViewDistance();
 }
