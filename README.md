@@ -16,7 +16,7 @@ All commands are prefixed with ```v```
 | ```vquery [blocks\|entities] <block\|entity> <distance>```                 | Prints the amount of entities/blocks loaded within <distance> chunks. Default distance is your render distance. |
 | ```vfill <pos1> <pos2> <block> [hollow\|keep\|outline\|replace] [block]``` | Fills an area with blocks (client-side). Use vanilla `/fill` syntax.                                            |
 | ```vstop```                                                                | Stops the Minecraft client.                                                                                     |
-| ```vresize <width> <height>```                                             | Resizes the Minecraft Client's window.                                                                          |
+| ```vresize <width> <height>```                                             | Resizes the Minecraft client's window.                                                                          |
 
 </details> 
 
