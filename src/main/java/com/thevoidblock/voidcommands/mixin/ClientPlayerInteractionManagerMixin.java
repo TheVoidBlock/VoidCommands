@@ -23,7 +23,6 @@ public class ClientPlayerInteractionManagerMixin {
             at = @At(value = "INVOKE",
                     target = "Lorg/apache/commons/lang3/mutable/MutableObject;<init>()V",
                     shift = At.Shift.AFTER),
-            locals = LocalCapture.CAPTURE_FAILHARD,
             cancellable = true
     )
     private void injectAfterMutableObject(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
