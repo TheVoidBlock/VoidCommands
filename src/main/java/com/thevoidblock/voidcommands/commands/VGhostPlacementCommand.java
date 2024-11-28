@@ -2,6 +2,7 @@ package com.thevoidblock.voidcommands.commands;
 
 import com.mojang.brigadier.context.CommandContext;
 import com.thevoidblock.voidcommands.TempConfig;
+import com.thevoidblock.voidcommands.VoidCommands;
 import dev.xpple.clientarguments.arguments.CEnumArgument;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -9,8 +10,6 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import com.thevoidblock.voidcommands.util.BooleanToggles;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.text.Text;
-
-import java.awt.*;
 
 import static com.thevoidblock.voidcommands.VoidCommands.*;
 import static java.lang.String.format;
@@ -37,12 +36,10 @@ public class VGhostPlacementCommand {
             case BooleanToggles.TOGGLE -> TempConfig.ghostPlacement = !TempConfig.ghostPlacement;
         }
 
-        assert CLIENT.player != null;
-        CLIENT.player.sendMessage(
-                Text.translatable(String.format("chat.%s.ghost_placement_toggle", MOD_ID)).withColor(Color.WHITE.getRGB()).append(Text.literal(" "))
-                        .append(Text.translatable(String.format(TempConfig.ghostPlacement ? "chat.%s.toggle_on" : "chat.%s.toggle_off", MOD_ID))
-                                .withColor(TempConfig.ghostPlacement ? Color.GREEN.getRGB() : Color.RED.getRGB())
-        ), true);
+        VoidCommands.notifyModuleState(
+                Text.translatable(String.format("chat.%s.ghost_placement_toggle", MOD_ID)),
+                TempConfig.ghostPlacement
+        );
         return 1;
     }
 }
