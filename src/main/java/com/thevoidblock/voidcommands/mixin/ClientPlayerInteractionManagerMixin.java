@@ -28,7 +28,7 @@ public class ClientPlayerInteractionManagerMixin {
     private void injectAfterMutableObject(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
         if(TempConfig.ghostPlacement) {
             cir.setReturnValue(this.interactBlockInternal(player, hand, hitResult));
-            return;
+            cir.cancel();
         }
     }
 }
