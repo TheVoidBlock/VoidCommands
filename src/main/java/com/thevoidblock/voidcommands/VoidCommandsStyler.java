@@ -1,10 +1,13 @@
 package com.thevoidblock.voidcommands;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;
 
+@Environment(EnvType.CLIENT)
 public class VoidCommandsStyler {
 
     public static final Formatting HEADER_FORMATTING = Formatting.WHITE;

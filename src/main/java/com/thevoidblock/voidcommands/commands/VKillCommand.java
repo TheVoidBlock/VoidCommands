@@ -3,6 +3,8 @@ package com.thevoidblock.voidcommands.commands;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.xpple.clientarguments.arguments.CEntityArgument;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.entity.Entity;
@@ -16,6 +18,7 @@ import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
+@Environment(EnvType.CLIENT)
 public class VKillCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(

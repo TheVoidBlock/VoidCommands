@@ -1,6 +1,8 @@
 package com.thevoidblock.voidcommands.commands;
 
 import com.mojang.brigadier.context.CommandContext;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 
@@ -9,6 +11,7 @@ import static com.thevoidblock.voidcommands.VoidCommands.COMMAND_PREFIX;
 import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
+@Environment(EnvType.CLIENT)
 public class VStopCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(

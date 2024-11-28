@@ -4,6 +4,8 @@ import com.mojang.brigadier.context.CommandContext;
 import dev.xpple.clientarguments.arguments.CBlockPosArgument;
 import dev.xpple.clientarguments.arguments.CBlockPredicateArgument;
 import dev.xpple.clientarguments.arguments.CBlockStateArgument;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.block.BlockState;
@@ -22,6 +24,7 @@ import static java.lang.String.format;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
+@Environment(EnvType.CLIENT)
 public class VFillCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
