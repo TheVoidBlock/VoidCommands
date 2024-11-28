@@ -30,7 +30,7 @@ public class VoidCommands implements ClientModInitializer {
 
     public static void notifyModuleState(Text module, boolean state) {
         Text message = ((MutableText)module).formatted(IDENTIFIER_FORMATTING).append(Text.literal(" "))
-                .append(Text.translatable(String.format(state ? "chat.%s.toggle_on" : "chat.%s.toggle_off", MOD_ID))
+                .append(Text.translatable(String.format(state ? "chat.%s.state_on" : "chat.%s.state_off", MOD_ID))
                         .withColor(TempConfig.ghostPlacement ? Color.GREEN.getRGB() : Color.RED.getRGB())
                 )
         ;

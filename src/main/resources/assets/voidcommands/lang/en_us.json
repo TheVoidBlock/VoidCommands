@@ -1,7 +1,7 @@
 {
   "chat.voidcommands.ghost_placement_toggle": "Toggled Ghost Placement",
-  "chat.voidcommands.toggle_on": "ON",
-  "chat.voidcommands.toggle_off": "OFF",
+  "chat.voidcommands.state_on": "ON",
+  "chat.voidcommands.state_off": "OFF",
 
   "chat.voidcommands.render_info_header": "Client/Server Render Information:",
   "chat.voidcommands.server_simulation_distance": "Server Simulation Distance",
