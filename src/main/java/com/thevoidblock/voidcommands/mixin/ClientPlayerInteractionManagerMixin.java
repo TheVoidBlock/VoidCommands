@@ -19,9 +19,11 @@ public class ClientPlayerInteractionManagerMixin {
     private ActionResult interactBlockInternal(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult) { return null; }
 
     @Inject(method = "interactBlock",
-            at = @At(value = "INVOKE",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lorg/apache/commons/lang3/mutable/MutableObject;<init>()V",
-                    shift = At.Shift.AFTER),
+                    shift = At.Shift.AFTER
+            ),
             cancellable = true
     )
     private void injectAfterMutableObject(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
