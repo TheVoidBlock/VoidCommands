@@ -1,8 +1,9 @@
 # Void Commands <a href="https://github.com/TheVoidBlock/VoidCommands/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/TheVoidBlock/voidcommands?include_prereleases&sort=semver&display_name=tag&style=for-the-badge&logo=github"></a> <a href="https://modrinth.com/mod/voidcommands"><img alt="Modrinth Downloads" src="https://img.shields.io/modrinth/dt/voidcommands?style=for-the-badge&logo=modrinth&label=MODRINTH&color=%231BD96A"></a> <a href="https://www.gnu.org/licenses/gpl-3.0.html"><img alt="GNU GPL3" src="https://www.gnu.org/graphics/gplv3-127x51.png"></a>
-All commands are prefixed with ```v```
 
-<details>
-<summary>Commands</summary>
+Adds various client side commands.
+
+## Commands
+All commands are prefixed with ```v```
 
 | Command                                                                    | Description                                                                                                     |
 |----------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
@@ -17,8 +18,6 @@ All commands are prefixed with ```v```
 | ```vfill <pos1> <pos2> <block> [hollow\|keep\|outline\|replace] [block]``` | Fills an area with blocks (client-side). Use vanilla `/fill` syntax.                                            |
 | ```vstop```                                                                | Stops the Minecraft client.                                                                                     |
 | ```vresize <width> <height>```                                             | Resizes the Minecraft client's window.                                                                          |
-
-</details> 
 
 Note: This mod is very new, and I'm adding most features suggested. You can [suggest a feature](https://github.com/TheVoidBlock/VoidCommands/issues/new) through the [GitHub](https://github.com/TheVoidBlock/VoidCommands)!
 
