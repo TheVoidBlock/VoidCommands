@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallba
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -47,7 +48,7 @@ public class VSummonCommand {
         NbtCompound nbtCompound = nbt.copy();
         nbtCompound.putString("id", entityType.registryKey().getValue().toString());
 
-        final Entity processedEntity = EntityType.loadEntityWithPassengers(nbtCompound, CLIENT.world, entity -> {
+        final Entity processedEntity = EntityType.loadEntityWithPassengers(nbtCompound, CLIENT.world, SpawnReason.COMMAND, entity -> {
             entity.refreshPositionAndAngles(pos.x, pos.y, pos.z, entity.getYaw(), entity.getPitch());
             return entity;
         });
