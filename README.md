@@ -19,6 +19,6 @@ All commands are prefixed with ```v```
 | ```vstop```                                                                | Stops the Minecraft client.                                                                                     |
 | ```vresize <width> <height>```                                             | Resizes the Minecraft client's window.                                                                          |
 
-Note: This mod is very new, and I'm adding most features suggested. You can [suggest a feature](https://github.com/TheVoidBlock/VoidCommands/issues/new) through the [GitHub](https://github.com/TheVoidBlock/VoidCommands)!
+Note: I'm adding most features suggested. You can [suggest a feature](https://github.com/TheVoidBlock/VoidCommands/issues/new) through the [GitHub](https://github.com/TheVoidBlock/VoidCommands)!
 
 if you like this mod, I also recommend getting [ClientCommands](https://modrinth.com/mod/client-commands)
