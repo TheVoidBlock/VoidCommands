@@ -36,7 +36,7 @@ public class VoidCommands implements ClientModInitializer {
         ;
 
         if (CLIENT.player != null) {
-            CLIENT.player.sendMessage(message);
+            CLIENT.player.sendMessage(message, false);
         } else {
             LOGGER.info(message.getString());
         }
