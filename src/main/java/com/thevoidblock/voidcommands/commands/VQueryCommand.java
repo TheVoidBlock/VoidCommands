@@ -16,6 +16,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
 import static com.thevoidblock.voidcommands.VoidCommands.COMMAND_PREFIX;
 import static com.thevoidblock.voidcommands.VoidCommandsStyler.ERROR_FORMATTING;
@@ -94,23 +98,30 @@ public class VQueryCommand {
     }
 
     private static int executeBlocks(CommandContext<FabricClientCommandSource> context, BlockState blockState, int distance) {
-
-        int queryCount = 0;
+        AtomicInteger queryCount = new AtomicInteger(0);
 
         assert CLIENT.world != null;
         final Vec3d sourcePos = context.getSource().getPosition();
-        for(ChunkPos chunkPos : ChunkTracker.loadedChunks) {
-            if(pow(chunkPos.x - (int)floor(sourcePos.x/16), 2) + pow(chunkPos.z - (int)floor(sourcePos.z/16), 2) <= pow(distance, 2))
-                for (int x = 0; x < CHUNK_WIDTH; x++) {
-                    for (int y = CLIENT.world.getBottomY(); y < CLIENT.world.getHeight(); y++)
-                        for (int z = 0; z < CHUNK_WIDTH; z++) {
-                            BlockPos blockPos = new BlockPos(chunkPos.x*CHUNK_WIDTH + x, y, chunkPos.z*CHUNK_WIDTH + z);
-                            if(CLIENT.world.getBlockState(blockPos) == blockState) queryCount++;
+
+        try (ExecutorService threadPool = Executors.newFixedThreadPool(ChunkTracker.loadedChunks.size())) {
+            for(ChunkPos chunkPos : ChunkTracker.loadedChunks) {
+                threadPool.submit(() -> {
+                    if (pow(chunkPos.x - (int) floor(sourcePos.x / 16), 2) + pow(chunkPos.z - (int) floor(sourcePos.z / 16), 2) <= pow(distance, 2)) {
+                        for (int x = 0; x < CHUNK_WIDTH; x++) {
+                            for (int y = CLIENT.world.getBottomY(); y < CLIENT.world.getHeight(); y++) {
+                                for (int z = 0; z < CHUNK_WIDTH; z++) {
+                                    BlockPos blockPos = new BlockPos(chunkPos.x * CHUNK_WIDTH + x, y, chunkPos.z * CHUNK_WIDTH + z);
+                                    if (CLIENT.world.getBlockState(blockPos) == blockState)
+                                        queryCount.incrementAndGet();
+                                }
+                            }
                         }
+                    }
+                });
             }
         }
 
-        if(queryCount != 0) context.getSource().sendFeedback(getFeedback(context, queryCount, distance));
+        if(queryCount.get() != 0) context.getSource().sendFeedback(getFeedback(context, queryCount.get(), distance));
         else context.getSource().sendFeedback(
                 translatable(
                         "chat.voidcommands.block_not_found",
@@ -118,7 +129,7 @@ public class VQueryCommand {
                         distance
                 ).formatted(ERROR_FORMATTING)
         );
-        return queryCount;
+        return queryCount.get();
     }
 
     private static Text getFeedback(CommandContext<FabricClientCommandSource> context, int count, int distance) {
