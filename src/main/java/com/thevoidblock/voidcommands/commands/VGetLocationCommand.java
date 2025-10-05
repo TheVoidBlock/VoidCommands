@@ -32,15 +32,14 @@ public class VGetLocationCommand {
     }
 
     private static int execute(CommandContext<FabricClientCommandSource> context, Entity entity) {
-
-        assert entity.getWorld().getDimensionEntry().getKey().isPresent();
-        final Identifier dimension = entity.getWorld().getDimensionEntry().getKey().get().getValue();
+        assert entity.getEntityWorld().getDimensionEntry().getKey().isPresent();
+        final Identifier dimension = entity.getEntityWorld().getDimensionEntry().getKey().get().getValue();
 
         assert entity.getDisplayName() != null;
         context.getSource().sendFeedback(
                 ((MutableText)entity.getDisplayName()).formatted(HEADER_FORMATTING).append("'s ").append(Text.translatable(format("chat.%s.current_location", MOD_ID))).append(": ")
                         .append(formatPlayerPos(
-                                entity.getPos()
+                                entity.getEntityPos()
                         )).append(" ")
                         .append(Text.translatable(format("chat.%s.location_dimension_separator", MOD_ID)).formatted(SEPERATOR_FORMATTING)).append(" ")
                         .append(Text.literal(dimension.toString()).formatted(IDENTIFIER_FORMATTING))

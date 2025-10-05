@@ -76,7 +76,7 @@ public class VQueryCommand {
         try {
             queryCount = CEntityArgument.getEntities(context, "entities").stream()
                     .filter(entity ->
-                        pow((int)floor(entity.getPos().x/16) - (int)floor(sourcePos.x/16), 2) + pow((int)floor(entity.getPos().z/16) - (int)floor(sourcePos.z/16), 2) <= pow(distance, 2)
+                        pow((int)floor(entity.getEntityPos().x/16) - (int)floor(sourcePos.x/16), 2) + pow((int)floor(entity.getEntityPos().z/16) - (int)floor(sourcePos.z/16), 2) <= pow(distance, 2)
                     )
                     .toList().size();
             context.getSource().sendFeedback(getFeedback(context, queryCount, distance));
