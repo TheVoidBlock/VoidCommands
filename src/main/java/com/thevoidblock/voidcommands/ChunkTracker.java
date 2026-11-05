@@ -13,10 +13,10 @@ public class ChunkTracker {
 
     public static void register() {
         ClientChunkEvents.CHUNK_LOAD.register(
-                (world, chunk) -> loadedChunks.add(chunk.getPos())
+                (_, chunk) -> loadedChunks.add(chunk.getPos())
         );
         ClientChunkEvents.CHUNK_UNLOAD.register(
-                (world, chunk) -> loadedChunks.remove(chunk.getPos())
+                (_, chunk) -> loadedChunks.remove(chunk.getPos())
         );
     }
 }

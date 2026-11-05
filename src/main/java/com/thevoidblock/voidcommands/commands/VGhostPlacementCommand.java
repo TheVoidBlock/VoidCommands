@@ -21,7 +21,7 @@ import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.argument;
 public class VGhostPlacementCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
-                (dispatcher, registryAccess) -> dispatcher.register(
+                (dispatcher, _) -> dispatcher.register(
                         literal(format("%sghostplacement", COMMAND_PREFIX))
                                 .then(argument("toggle", CEnumArgument.enumArg(BooleanToggles.class))
                                         .executes(VGhostPlacementCommand::ghostPlacementToggle)

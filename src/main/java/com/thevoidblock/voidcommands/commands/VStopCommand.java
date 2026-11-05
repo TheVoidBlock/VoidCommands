@@ -16,7 +16,7 @@ import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
 public class VStopCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
-                (dispatcher, registryAccess) -> dispatcher.register(
+                (dispatcher, _) -> dispatcher.register(
                         literal(format("%sstop", COMMAND_PREFIX)).executes(
                                 VStopCommand::execute
                         )

@@ -10,5 +10,5 @@ public interface SummonCommandAccessor {
     @Accessor
     static SimpleCommandExceptionType getERROR_FAILED() {
         throw new AssertionError();
-    };
+    }
 }

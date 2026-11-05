@@ -18,7 +18,7 @@ import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.argument;
 public class VResizeCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
-                (dispatcher, registryAccess) -> dispatcher.register(
+                (dispatcher, _) -> dispatcher.register(
                         literal(format("%sresize", COMMAND_PREFIX)).then(
                                 argument(
                                         "width", IntegerArgumentType.integer(0)
