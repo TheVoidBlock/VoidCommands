@@ -34,6 +34,6 @@ public class VoidCommands implements ClientModInitializer {
                         .withColor(TempConfig.ghostPlacement ? Color.GREEN.getRGB() : Color.RED.getRGB())
                 );
 
-        CLIENT.gui.getChat().addClientSystemMessage(message);
+        CLIENT.gui.hud.getChat().addClientSystemMessage(message);
     }
 }
