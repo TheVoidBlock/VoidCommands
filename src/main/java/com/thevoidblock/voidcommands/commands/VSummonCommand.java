@@ -51,7 +51,7 @@ public class VSummonCommand {
     }
 
     private static int execute(CommandContext<FabricClientCommandSource> context, Vec3 pos, CompoundTag nbt) throws CommandSyntaxException {
-        Holder.Reference<EntityType<?>> entityType = CResourceArgument.getEntityType(context, "entity");
+        Holder.Reference<EntityType<?>> entityType = CResourceArgument.getSummonableEntityType(context, "entity");
 
         CompoundTag entityTag = nbt.copy();
         entityTag.putString("id", entityType.key().identifier().toString());
