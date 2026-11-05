@@ -15,7 +15,7 @@
 
   "chat.voidcommands.current_location": "Current Location",
   "chat.voidcommands.location_dimension_separator": "in",
-  "chat.voidcommands.query_found": "Found %s of %s within %s chunks",
+  "chat.voidcommands.query_found": "Found %s %s within %s chunks",
   "chat.voidcommands.block_not_found": "Block %s not found within %s chunks",
   "chat.voidcommands.entity_not_found": "Entity %s not found within 1 chunks"
 }
