@@ -1,5 +1,6 @@
 package com.thevoidblock.voidcommands.commands;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import dev.xpple.clientarguments.arguments.CBlockPosArgument;
 import dev.xpple.clientarguments.arguments.CBlockPredicateArgument;
@@ -8,21 +9,21 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.pattern.CachedBlockPosition;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.pattern.BlockInWorld;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import org.jspecify.annotations.Nullable;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 
-import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
 import static com.thevoidblock.voidcommands.VoidCommands.COMMAND_PREFIX;
 import static java.lang.String.format;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.argument;
 
 @Environment(EnvType.CLIENT)
 public class VFillCommand {
@@ -33,28 +34,23 @@ public class VFillCommand {
                                 argument("pos1", CBlockPosArgument.blockPos()).then(
                                     argument("pos2", CBlockPosArgument.blockPos()).then(
                                             argument("blockState", CBlockStateArgument.blockState(registryAccess)).executes(
-                                                    context -> execute(context, FillModes.NORMAL, Optional.empty())
+                                                    context -> execute(context, FillModes.NORMAL, null)
                                             ).then(
                                                     literal("hollow").executes(
-                                                            context -> execute(context, FillModes.HOLLOW, Optional.empty())
+                                                            context -> execute(context, FillModes.HOLLOW, null)
                                                     )
                                             ).then(
                                                     literal("keep").executes(
-                                                            context -> execute(context, FillModes.KEEP, Optional.empty())
+                                                            context -> execute(context, FillModes.KEEP, null)
                                                     )
                                             ).then(
                                                     literal("outline").executes(
-                                                            context -> execute(context, FillModes.OUTLINE, Optional.empty())
+                                                            context -> execute(context, FillModes.OUTLINE, null)
                                                     )
                                             ).then(
                                                     literal("replace").then(
                                                             argument("replace", CBlockPredicateArgument.blockPredicate(registryAccess)).executes(
-                                                                    context -> execute(
-                                                                            context,
-                                                                            FillModes.REPLACE, Optional.of(
-                                                                                    CBlockPredicateArgument.getBlockPredicate(context, "replace")
-                                                                            )
-                                                                    )
+                                                                    context -> execute(context, FillModes.REPLACE, CBlockPredicateArgument.getBlockPredicate(context, "replace"))
                                                             )
                                                     )
                                             )
@@ -64,37 +60,34 @@ public class VFillCommand {
                 ));
     }
 
-    private static int execute(CommandContext<FabricClientCommandSource> context, FillModes fillMode, Optional<Predicate<CachedBlockPosition>> replace) {
+    private static int execute(CommandContext<FabricClientCommandSource> context, FillModes fillMode, @Nullable Predicate<BlockInWorld> replace) {
         BlockState blockState = CBlockStateArgument.getBlockState(context, "blockState").getState();
         BlockPos pos1 = CBlockPosArgument.getBlockPos(context, "pos1");
         BlockPos pos2 = CBlockPosArgument.getBlockPos(context, "pos2");
 
-        fillMode.getFiller().fill(blockState, pos1, pos2, fillMode.getFilter(), replace);
-        return 0;
+        fillMode.getFiller().fill(blockState, pos1, pos2, fillMode.getFilter(), replace, context.getSource().getLevel());
+        return Command.SINGLE_SUCCESS;
     }
 
     private enum FillModes {
-        NORMAL((block, pos, pos1, pos2, replace) -> block, Fillers.CUBE.getFiller()),
-        OUTLINE((block, pos, pos1, pos2, replace) -> block, Fillers.CUBE_OUTLINE.getFiller()),
-        HOLLOW((block, pos, pos1, pos2, replace) -> {
-            BlockBox range = getRange(pos1, pos2);
-            return pos.getX() == range.getMinX()
-                    || pos.getX() == range.getMaxX()
-                    || pos.getY() == range.getMinY()
-                    || pos.getY() == range.getMaxY()
-                    || pos.getZ() == range.getMinZ()
-                    || pos.getZ() == range.getMaxZ()
+        NORMAL((block, _, _, _, _, _) -> block, Fillers.CUBE.getFiller()),
+        OUTLINE((block, _, _, _, _, _) -> block, Fillers.CUBE_OUTLINE.getFiller()),
+        HOLLOW((block, pos, pos1, pos2, _, _) -> {
+            BoundingBox range = getRange(pos1, pos2);
+            return pos.getX() == range.minX()
+                    || pos.getX() == range.maxX()
+                    || pos.getY() == range.minY()
+                    || pos.getY() == range.maxY()
+                    || pos.getZ() == range.minZ()
+                    || pos.getZ() == range.maxZ()
                     ? block
-                    : Blocks.AIR.getDefaultState();
+                    : Blocks.AIR.defaultBlockState();
         }, Fillers.CUBE.getFiller()),
-        KEEP((block, pos, pos1, pos2, replace) -> {
-            assert CLIENT.world != null;
-            return CLIENT.world.getBlockState(pos).isIn(BlockTags.AIR) ? block : null;
-        }, Fillers.CUBE.getFiller()),
+        KEEP((block, pos, _, _, _, level) -> level.getBlockState(pos).is(BlockTags.AIR) ? block : null, Fillers.CUBE.getFiller()),
         REPLACE(
-                (block, pos, pos1, pos2, replace) -> {
-                    if(replace.isPresent()) {
-                        if(replace.get().test(new CachedBlockPosition(CLIENT.world, pos, false)))
+                (block, pos, _, _, replace, level) -> {
+                    if(replace != null) {
+                        if(replace.test(new BlockInWorld(level, pos, false)))
                             return block;
                         else
                             return null;
@@ -122,49 +115,48 @@ public class VFillCommand {
     }
 
     private enum Fillers {
-
-        CUBE((block, pos1, pos2, filter, replace) ->
-                BlockPos.iterate(pos1, pos2).forEach(pos ->
-                        setFilteredBlock(block, pos, pos1, pos2, replace, filter)
+        CUBE((block, pos1, pos2, filter, replace, level) ->
+                BlockPos.betweenClosed(pos1, pos2).forEach(pos ->
+                        setFilteredBlock(block, pos, pos1, pos2, replace, filter, level)
                 )
         ),
-        CUBE_OUTLINE((block, pos1, pos2, filter, replace) -> {
-            BlockBox range = getRange(pos1, pos2);
+        CUBE_OUTLINE((block, pos1, pos2, filter, replace, level) -> {
+            BoundingBox range = getRange(pos1, pos2);
 
-            for(int x = range.getMinX(); x <= range.getMaxX(); x++)
-                for(int y = range.getMinY(); y <= range.getMaxY(); y++) {
-                    int z = range.getMinZ();
-                    setFilteredBlock(block, new BlockPos(x, y, z), pos1, pos2, replace, filter);
+            for(int x = range.minX(); x <= range.maxX(); x++)
+                for(int y = range.minY(); y <= range.maxY(); y++) {
+                    int z = range.minZ();
+                    setFilteredBlock(block, new BlockPos(x, y, z), pos1, pos2, replace, filter, level);
                 }
 
-            for(int x = range.getMinX(); x <= range.getMaxX(); x++)
-                for(int y = range.getMinY(); y <= range.getMaxY(); y++) {
-                    int z = range.getMaxZ();
-                    setFilteredBlock(block, new BlockPos(x, y, z), pos1, pos2, replace, filter);
+            for(int x = range.minX(); x <= range.maxX(); x++)
+                for(int y = range.minY(); y <= range.maxY(); y++) {
+                    int z = range.maxZ();
+                    setFilteredBlock(block, new BlockPos(x, y, z), pos1, pos2, replace, filter, level);
                 }
 
-            for(int x = range.getMinX(); x <= range.getMaxX(); x++)
-                for(int z = range.getMinZ(); z <= range.getMaxZ(); z++) {
-                    int y = range.getMinY();
-                    setFilteredBlock(block, new BlockPos(x, y, z), pos1, pos2, replace, filter);
+            for(int x = range.minX(); x <= range.maxX(); x++)
+                for(int z = range.minZ(); z <= range.maxZ(); z++) {
+                    int y = range.minY();
+                    setFilteredBlock(block, new BlockPos(x, y, z), pos1, pos2, replace, filter, level);
                 }
 
-            for(int x = range.getMinX(); x <= range.getMaxX(); x++)
-                for(int z = range.getMinZ(); z <= range.getMaxZ(); z++) {
-                    int y = range.getMaxY();
-                    setFilteredBlock(block, new BlockPos(x, y, z), pos1, pos2, replace, filter);
+            for(int x = range.minX(); x <= range.maxX(); x++)
+                for(int z = range.minZ(); z <= range.maxZ(); z++) {
+                    int y = range.maxY();
+                    setFilteredBlock(block, new BlockPos(x, y, z), pos1, pos2, replace, filter, level);
                 }
 
-            for(int y = range.getMinY(); y <= range.getMaxY(); y++)
-                for(int z = range.getMinZ(); z <= range.getMaxZ(); z++) {
-                    int x = range.getMinX();
-                    setFilteredBlock(block, new BlockPos(x, y, z), pos1, pos2, replace, filter);
+            for(int y = range.minY(); y <= range.maxY(); y++)
+                for(int z = range.minZ(); z <= range.maxZ(); z++) {
+                    int x = range.minX();
+                    setFilteredBlock(block, new BlockPos(x, y, z), pos1, pos2, replace, filter, level);
                 }
 
-            for(int y = range.getMinY(); y <= range.getMaxY(); y++)
-                for(int z = range.getMinZ(); z <= range.getMaxZ(); z++) {
-                    int x = range.getMaxX();
-                    setFilteredBlock(block, new BlockPos(x, y, z), pos1, pos2, replace, filter);
+            for(int y = range.minY(); y <= range.maxY(); y++)
+                for(int z = range.minZ(); z <= range.maxZ(); z++) {
+                    int x = range.maxX();
+                    setFilteredBlock(block, new BlockPos(x, y, z), pos1, pos2, replace, filter, level);
                 }
         });
 
@@ -181,22 +173,22 @@ public class VFillCommand {
 
     @FunctionalInterface
     private interface FillFilter {
-        BlockState filter(BlockState block, BlockPos pos, BlockPos pos1, BlockPos pos2, Optional<Predicate<CachedBlockPosition>> replace);
+        BlockState filter(BlockState block, BlockPos pos, BlockPos pos1, BlockPos pos2, @Nullable Predicate<BlockInWorld> replace, ClientLevel level);
     }
 
     @FunctionalInterface
     private interface Filler {
-        void fill(BlockState block, BlockPos pos1, BlockPos pos2, FillFilter filter, Optional<Predicate<CachedBlockPosition>> replace);
+        void fill(BlockState block, BlockPos pos1, BlockPos pos2, FillFilter filter, @Nullable Predicate<BlockInWorld> replace, ClientLevel level);
     }
 
-    private static void setFilteredBlock(BlockState block, BlockPos pos, BlockPos pos1, BlockPos pos2, Optional<Predicate<CachedBlockPosition>> replace, FillFilter filter) {
-        BlockState filteredBlock = filter.filter(block, pos, pos1, pos2, replace);
-        assert CLIENT.world != null;
-        if (filteredBlock != null)
-            CLIENT.world.setBlockState(pos, filteredBlock);
+    private static void setFilteredBlock(BlockState block, BlockPos pos, BlockPos pos1, BlockPos pos2, @Nullable Predicate<BlockInWorld> replace, FillFilter filter, ClientLevel level) {
+        BlockState filteredBlock = filter.filter(block, pos, pos1, pos2, replace, level);
+        if (filteredBlock != null) {
+            level.setBlockAndUpdate(pos, filteredBlock);
+        }
     }
 
-    private static BlockBox getRange(BlockPos pos1, BlockPos pos2) {
-        return new BlockBox(pos1.getX(), pos1.getY(), pos1.getZ(), pos2.getX(), pos2.getY(), pos2.getZ());
+    private static BoundingBox getRange(BlockPos pos1, BlockPos pos2) {
+        return new BoundingBox(pos1.getX(), pos1.getY(), pos1.getZ(), pos2.getX(), pos2.getY(), pos2.getZ());
     }
 }

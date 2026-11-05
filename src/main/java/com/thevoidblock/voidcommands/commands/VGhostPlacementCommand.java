@@ -1,5 +1,6 @@
 package com.thevoidblock.voidcommands.commands;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.thevoidblock.voidcommands.TempConfig;
 import com.thevoidblock.voidcommands.VoidCommands;
@@ -9,12 +10,12 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import com.thevoidblock.voidcommands.util.BooleanToggles;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 
 import static com.thevoidblock.voidcommands.VoidCommands.*;
 import static java.lang.String.format;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.argument;
 
 @Environment(EnvType.CLIENT)
 public class VGhostPlacementCommand {
@@ -37,9 +38,10 @@ public class VGhostPlacementCommand {
         }
 
         VoidCommands.notifyModuleState(
-                Text.translatable(String.format("chat.%s.ghost_placement_toggle", MOD_ID)),
+                Component.translatable(String.format("chat.%s.ghost_placement_toggle", MOD_ID)),
                 TempConfig.ghostPlacement
         );
-        return 1;
+
+        return Command.SINGLE_SUCCESS;
     }
 }

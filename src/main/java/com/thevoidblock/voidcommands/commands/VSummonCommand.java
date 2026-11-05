@@ -1,64 +1,70 @@
 package com.thevoidblock.voidcommands.commands;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.thevoidblock.voidcommands.mixin.SummonCommandAccessor;
 import dev.xpple.clientarguments.arguments.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.phys.Vec3;
 
-import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
 import static com.thevoidblock.voidcommands.VoidCommands.COMMAND_PREFIX;
 import static java.lang.String.format;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.argument;
 
 @Environment(EnvType.CLIENT)
 public class VSummonCommand {
     public static void register() {
         ClientCommandRegistrationCallback.EVENT.register(
-                (dispatcher, registryAccess) -> dispatcher.register(
+                (dispatcher, buildContext) -> dispatcher.register(
                         literal(format("%ssummon", COMMAND_PREFIX)).then(argument(
-                                "entity", CResourceArgument.registryEntry(registryAccess, RegistryKeys.ENTITY_TYPE)
+                                "entity", CResourceArgument.resource(buildContext, Registries.ENTITY_TYPE)
                         ).suggests(CSuggestionProviders.SUMMONABLE_ENTITIES).executes(
-                            context -> execute(context, context.getSource().getPosition(), new NbtCompound())
+                            context -> execute(context, context.getSource().getPosition(), new CompoundTag())
 
                         ).then(argument("location", CVec3Argument.vec3()).executes(
-                            context -> execute(context, CVec3Argument.getVec3(context, "location"), new NbtCompound())
+                            context -> execute(context, CVec3Argument.getVec3(context, "location"), new CompoundTag())
 
                         ).then(argument("nbt", CNbtTagArgument.nbtTag()).executes(
-                                context -> execute(context, CVec3Argument.getVec3(context, "location"), (NbtCompound) CNbtTagArgument.getNbtTag(context, "nbt"))
+                                context -> execute(context, CVec3Argument.getVec3(context, "location"), (CompoundTag) CNbtTagArgument.getNbtTag(context, "nbt"))
                         ))
         ))));
     }
 
-    private static int execute(CommandContext<FabricClientCommandSource> context, Vec3d pos, NbtCompound nbt) throws CommandSyntaxException {
+    private static int execute(CommandContext<FabricClientCommandSource> context, Vec3 pos, CompoundTag nbt) throws CommandSyntaxException {
 
-        RegistryEntry.Reference<EntityType<?>> entityType = CResourceArgument.getEntityType(context, "entity");
+        Holder.Reference<EntityType<?>> entityType = CResourceArgument.getEntityType(context, "entity");
 
-        NbtCompound nbtCompound = nbt.copy();
-        nbtCompound.putString("id", entityType.registryKey().getValue().toString());
+        CompoundTag nbtCompound = nbt.copy();
+        nbtCompound.putString("id", entityType.key().identifier().toString());
 
-        final Entity processedEntity = EntityType.loadEntityWithPassengers(nbtCompound, CLIENT.world, SpawnReason.COMMAND, entity -> {
-            entity.refreshPositionAndAngles(pos.x, pos.y, pos.z, entity.getYaw(), entity.getPitch());
+        ClientLevel level = context.getSource().getLevel();
+
+        final Entity processedEntity = EntityType.loadEntityRecursive(nbtCompound, level, EntitySpawnReason.COMMAND, entity -> {
+            entity.snapTo(pos.x, pos.y, pos.z, entity.getYRot(), entity.getXRot());
             return entity;
         });
 
-        assert CLIENT.world != null;
-        CLIENT.world.addEntity(processedEntity);
+        if(processedEntity == null) {
+            throw SummonCommandAccessor.getERROR_FAILED().create();
+        }
 
-        assert processedEntity != null;
-        context.getSource().sendFeedback(Text.translatable("commands.summon.success", processedEntity.getDisplayName()));
+        level.addEntity(processedEntity);
 
-        return 1;
+        context.getSource().sendFeedback(Component.translatable("commands.summon.success", processedEntity.getDisplayName()));
+
+        return Command.SINGLE_SUCCESS;
     }
 }

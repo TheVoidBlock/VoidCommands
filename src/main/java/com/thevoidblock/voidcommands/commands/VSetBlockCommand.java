@@ -1,5 +1,6 @@
 package com.thevoidblock.voidcommands.commands;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import dev.xpple.clientarguments.arguments.CBlockPosArgument;
 import dev.xpple.clientarguments.arguments.CBlockStateArgument;
@@ -7,14 +8,14 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.block.BlockState;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.state.BlockState;
 
 import static com.thevoidblock.voidcommands.VoidCommands.*;
 import static java.lang.String.format;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.argument;
 
 @Environment(EnvType.CLIENT)
 public class VSetBlockCommand {
@@ -34,15 +35,15 @@ public class VSetBlockCommand {
         BlockPos blockPos = CBlockPosArgument.getBlockPos(context, "pos");
         BlockState blockState = CBlockStateArgument.getBlockState(context, "block").getState();
 
-        assert CLIENT.world != null;
-        CLIENT.world.setBlockState(blockPos, blockState);
+        assert CLIENT.level != null;
+        CLIENT.level.setBlockAndUpdate(blockPos, blockState);
 
         context.getSource().sendFeedback(
-                Text.translatable(format("chat.%s.setblock", MOD_ID))
+                Component.translatable(format("chat.%s.setblock", MOD_ID))
                         .append(" ")
                         .append(blockPos.toShortString())
         );
 
-        return 1;
+        return Command.SINGLE_SUCCESS;
     }
 }

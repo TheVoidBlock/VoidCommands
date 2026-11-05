@@ -2,10 +2,11 @@ package com.thevoidblock.voidcommands.util;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.util.StringIdentifiable;
+import net.minecraft.util.StringRepresentable;
+import org.jspecify.annotations.NonNull;
 
 @Environment(EnvType.CLIENT)
-public enum BooleanToggles implements StringIdentifiable {
+public enum BooleanToggles implements StringRepresentable {
     ON("on"),
     OFF("off"),
     TOGGLE("toggle");
@@ -17,7 +18,7 @@ public enum BooleanToggles implements StringIdentifiable {
     }
 
     @Override
-    public String asString() {
+    public @NonNull String getSerializedName() {
         return this.id;
     }
 }

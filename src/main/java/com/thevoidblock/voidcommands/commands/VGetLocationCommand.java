@@ -1,21 +1,27 @@
 package com.thevoidblock.voidcommands.commands;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import dev.xpple.clientarguments.arguments.CEntityArgument;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.entity.Entity;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.DimensionType;
+
+import java.util.Optional;
 
 import static com.thevoidblock.voidcommands.VoidCommands.*;
 import static com.thevoidblock.voidcommands.VoidCommandsStyler.*;
 import static java.lang.String.format;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.argument;
 
 @Environment(EnvType.CLIENT)
 public class VGetLocationCommand {
@@ -31,19 +37,23 @@ public class VGetLocationCommand {
         ));
     }
 
+    @SuppressWarnings("resource")
     private static int execute(CommandContext<FabricClientCommandSource> context, Entity entity) {
-        assert entity.getEntityWorld().getDimensionEntry().getKey().isPresent();
-        final Identifier dimension = entity.getEntityWorld().getDimensionEntry().getKey().get().getValue();
+        final Identifier dimensionIdentifier;
 
-        assert entity.getDisplayName() != null;
+        Level level = entity.level();
+        Optional<ResourceKey<DimensionType>> dimensionKey = level.dimensionTypeRegistration().unwrapKey();
+        dimensionIdentifier = dimensionKey.orElseThrow().identifier();
+
         context.getSource().sendFeedback(
-                ((MutableText)entity.getDisplayName()).formatted(HEADER_FORMATTING).append("'s ").append(Text.translatable(format("chat.%s.current_location", MOD_ID))).append(": ")
+                ((MutableComponent)entity.getDisplayName()).withStyle(HEADER_FORMATTING).append("'s ").append(Component.translatable(format("chat.%s.current_location", MOD_ID))).append(": ")
                         .append(formatPlayerPos(
-                                entity.getEntityPos()
+                                entity.position()
                         )).append(" ")
-                        .append(Text.translatable(format("chat.%s.location_dimension_separator", MOD_ID)).formatted(SEPERATOR_FORMATTING)).append(" ")
-                        .append(Text.literal(dimension.toString()).formatted(IDENTIFIER_FORMATTING))
+                        .append(Component.translatable(format("chat.%s.location_dimension_separator", MOD_ID)).withStyle(SEPERATOR_FORMATTING)).append(" ")
+                        .append(Component.literal(dimensionIdentifier.toString()).withStyle(IDENTIFIER_FORMATTING))
         );
-        return 1;
+
+        return Command.SINGLE_SUCCESS;
     }
 }

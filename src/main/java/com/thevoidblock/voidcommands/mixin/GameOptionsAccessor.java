@@ -1,11 +1,11 @@
 package com.thevoidblock.voidcommands.mixin;
 
-import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.Options;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(GameOptions.class)
+@Mixin(Options.class)
 public interface GameOptionsAccessor {
-    @Accessor("serverViewDistance")
+    @Accessor("serverRenderDistance")
     int getServerViewDistance();
 }

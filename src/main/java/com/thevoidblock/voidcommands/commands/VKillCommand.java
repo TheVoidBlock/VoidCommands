@@ -7,16 +7,15 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.entity.Entity;
-import net.minecraft.text.Text;
-
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
 import java.util.Collection;
 
 import static com.thevoidblock.voidcommands.VoidCommands.CLIENT;
 import static com.thevoidblock.voidcommands.VoidCommands.COMMAND_PREFIX;
 import static java.lang.String.format;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
-import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommands.argument;
 
 @Environment(EnvType.CLIENT)
 public class VKillCommand {
@@ -35,13 +34,13 @@ public class VKillCommand {
     private static int execute(CommandContext<FabricClientCommandSource> context) throws CommandSyntaxException {
         Collection<? extends Entity> targets = CEntityArgument.getEntities(context, "entities");
 
-        assert CLIENT.world != null;
-        targets.forEach(entity -> CLIENT.world.removeEntity(entity.getId(), Entity.RemovalReason.KILLED));
+        assert CLIENT.level != null;
+        targets.forEach(entity -> entity.remove(Entity.RemovalReason.KILLED));
 
         if (targets.size() == 1) {
-            context.getSource().sendFeedback(Text.translatable("commands.kill.success.single", ((targets.iterator().next()).getDisplayName())));
+            context.getSource().sendFeedback(Component.translatable("commands.kill.success.single", ((targets.iterator().next()).getDisplayName())));
         } else {
-            context.getSource().sendFeedback(Text.translatable("commands.kill.success.multiple", targets.size()));
+            context.getSource().sendFeedback(Component.translatable("commands.kill.success.multiple", targets.size()));
         }
         return targets.size();
     }

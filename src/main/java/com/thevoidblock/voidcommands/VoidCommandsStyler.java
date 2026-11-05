@@ -2,36 +2,36 @@ package com.thevoidblock.voidcommands;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.phys.Vec3;
 
 @Environment(EnvType.CLIENT)
 public class VoidCommandsStyler {
 
-    public static final Formatting HEADER_FORMATTING = Formatting.WHITE;
-    public static final Formatting SEPERATOR_FORMATTING = Formatting.WHITE;
-    public static final Formatting NUMBER_FORMATTING = Formatting.GOLD;
-    public static final Formatting IDENTIFIER_FORMATTING = Formatting.WHITE;
-    public static final Formatting KEY_FORMATTING = Formatting.AQUA;
-    public static final Formatting ERROR_FORMATTING = Formatting.RED;
+    public static final ChatFormatting HEADER_FORMATTING = ChatFormatting.WHITE;
+    public static final ChatFormatting SEPERATOR_FORMATTING = ChatFormatting.WHITE;
+    public static final ChatFormatting NUMBER_FORMATTING = ChatFormatting.GOLD;
+    public static final ChatFormatting IDENTIFIER_FORMATTING = ChatFormatting.WHITE;
+    public static final ChatFormatting KEY_FORMATTING = ChatFormatting.AQUA;
+    public static final ChatFormatting ERROR_FORMATTING = ChatFormatting.RED;
 
-    public static <T extends Number> MutableText formatTranslatableNumber(String key, T value) {
+    public static <T extends Number> MutableComponent formatTranslatableNumber(String key, T value) {
         return
-                Text.translatable(key).formatted(KEY_FORMATTING)
-                        .append(Text.literal(": ").formatted(SEPERATOR_FORMATTING))
-                        .append(Text.literal(value.toString()).formatted(NUMBER_FORMATTING))
+                Component.translatable(key).withStyle(KEY_FORMATTING)
+                        .append(Component.literal(": ").withStyle(SEPERATOR_FORMATTING))
+                        .append(Component.literal(value.toString()).withStyle(NUMBER_FORMATTING))
                 ;
     }
 
-    public static MutableText formatPlayerPos(Vec3d vector) {
+    public static MutableComponent formatPlayerPos(Vec3 vector) {
         return
-                Text.literal(String.format("%.3f", vector.x)).formatted(NUMBER_FORMATTING)
-                        .append(Text.literal(", ").formatted(SEPERATOR_FORMATTING))
-                        .append(Text.literal(String.format("%.5f", vector.y)).formatted(NUMBER_FORMATTING))
-                        .append(Text.literal(", ").formatted(SEPERATOR_FORMATTING))
-                        .append(Text.literal(String.format("%.3f", vector.z)).formatted(NUMBER_FORMATTING))
+                Component.literal(String.format("%.3f", vector.x)).withStyle(NUMBER_FORMATTING)
+                        .append(Component.literal(", ").withStyle(SEPERATOR_FORMATTING))
+                        .append(Component.literal(String.format("%.5f", vector.y)).withStyle(NUMBER_FORMATTING))
+                        .append(Component.literal(", ").withStyle(SEPERATOR_FORMATTING))
+                        .append(Component.literal(String.format("%.3f", vector.z)).withStyle(NUMBER_FORMATTING))
                 ;
     }
 }

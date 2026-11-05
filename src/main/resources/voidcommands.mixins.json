@@ -4,7 +4,8 @@
   "package": "com.thevoidblock.voidcommands.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ClientPlayerInteractionManagerMixin"
+    "ClientPlayerInteractionManagerMixin",
+    "SummonCommandAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

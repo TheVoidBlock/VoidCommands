@@ -1,24 +1,23 @@
 package com.thevoidblock.voidcommands.mixin;
 
 import com.thevoidblock.voidcommands.TempConfig;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.network.ClientPlayerInteractionManager;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.client.multiplayer.MultiPlayerGameMode;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(ClientPlayerInteractionManager.class)
-public class ClientPlayerInteractionManagerMixin {
-
+@Mixin(MultiPlayerGameMode.class)
+public abstract class ClientPlayerInteractionManagerMixin {
     @Shadow
-    private ActionResult interactBlockInternal(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult) { return null; }
+    protected abstract InteractionResult performUseItemOn(LocalPlayer player, InteractionHand hand, BlockHitResult blockHit);
 
-    @Inject(method = "interactBlock",
+    @Inject(method = "useItemOn",
             at = @At(
                     value = "INVOKE",
                     target = "Lorg/apache/commons/lang3/mutable/MutableObject;<init>()V",
@@ -26,9 +25,9 @@ public class ClientPlayerInteractionManagerMixin {
             ),
             cancellable = true
     )
-    private void injectAfterMutableObject(ClientPlayerEntity player, Hand hand, BlockHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
+    private void injectAfterMutableObject(LocalPlayer player, InteractionHand hand, BlockHitResult blockHit, CallbackInfoReturnable<InteractionResult> cir) {
         if(TempConfig.ghostPlacement) {
-            cir.setReturnValue(this.interactBlockInternal(player, hand, hitResult));
+            cir.setReturnValue(this.performUseItemOn(player, hand, blockHit));
             cir.cancel();
         }
     }
